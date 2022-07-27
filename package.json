@@ -21,7 +21,9 @@
     "react-router-dom": "6",
     "react-tabs": "^5.1.0",
     "react-toastify": "^9.0.5",
-    "reactjs-popup": "^2.0.5"
+    "reactjs-popup": "^2.0.5",
+    "rollup-plugin-polyfill-node": "^0.10.2",
+    "zustand": "^4.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.15",

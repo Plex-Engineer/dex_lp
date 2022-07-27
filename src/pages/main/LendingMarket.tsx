@@ -1,7 +1,7 @@
 
 const LendingMarket = () => {
   return (
-    <div>LendingMarket</div>
+    <div></div>
   )
 }
 
