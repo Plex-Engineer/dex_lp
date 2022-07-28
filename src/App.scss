@@ -1,8 +1,5 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
 }
 
 :root{
@@ -47,16 +44,8 @@ input[type=number] {
   background: #07e48c;
 }
 .App {
-    background: rgb(0,0,0);
     background: repeating-linear-gradient(0deg, #010000 0%, #010000 4px, #021911 4px, #021911  8px);
     background-repeat: repeat-y;
-}
+    text-shadow: 0 0 4px #2cffab, 0 0 20px var(--primary-color);
 
-
-.ReactModal__Content{
-  background-color: red;
-}
-
-.web3modal-modal-card{
-  border-radius: 0px !important;
 }

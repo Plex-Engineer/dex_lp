@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import staticImage from "assets/bg-noise.gif"
 
-const StaticOverlay = styled.div`
+const StaticNoiseOverlay = styled.div`
 -webkit-font-smoothing: antialiased;
 background-attachment: fixed;
 background-repeat: repeat;
@@ -16,12 +16,13 @@ position: absolute;
 right: 0;
 top: 0;
 width: 100%;
-background-image: url({staticImage});
+background-image: url(${staticImage});
 background-size: 170px;
 mix-blend-mode: lighten;
 opacity: 70%;
 z-index: 600;
 `;
+
 
 const ScanlinesOverlay = styled.div`
 -webkit-font-smoothing: antialiased;
@@ -45,14 +46,12 @@ width: 100%;
 `;
 
 
-interface OverlayProps {
-height: number;
-}
-const Overlay = styled.div<OverlayProps>`
+const Overlay = styled.div`
 pointer-events: none;
 position: absolute;
 width: 100%;
-height: 100%; // 100% of the parent
+height: 100%; 
+
 background: repeating-linear-gradient(
   180deg,
   rgba(0, 0, 0, 0) 0,
@@ -61,17 +60,18 @@ background: repeating-linear-gradient(
 );
 background-size: auto 4px;
 z-index: 1;
-&::before {
-  content: "";
+
+`;
+
+const ScanLine = styled.div`
   pointer-events: none;
   position: absolute;
-  display: block;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
-  height: 100%; // 4 times the height of the overlay !TODO fix this with js height
+  height: 100%;
   background-image: linear-gradient(
     0deg,
     transparent 0%,
@@ -80,17 +80,22 @@ z-index: 1;
     rgba(32, 128, 32, 0.2) 3%,
     transparent 100%
   );
+  background-size: 100% 20rem;
   background-repeat: no-repeat;
-  background-position : 0 1000vh;
-  animation: scan 10s linear 0s 1;
-}
+
+  background-position : 0 -20rem;
+
+  animation: scan 3s linear 0s 1;
+
 @keyframes scan {
   0% {
-    background-position: 0 ${(props) => -props.height}px;
+    background-position: 0 -20rem;
   }
-  35%,
+  /* 35%, */
   100% {
-    background-position: 0 ${(props) => props.height +300}px;
+    background-position: 0 calc(100% + 20rem);
   }
 }
-`;
+`
+
+export {Overlay, StaticNoiseOverlay , ScanlinesOverlay, ScanLine}
