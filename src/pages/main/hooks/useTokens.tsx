@@ -6,7 +6,7 @@ import { PAIR, TESTPAIRS, MAINPAIRS } from "global/config/pairs";
 import { networkProperties } from "global/config/networks";
 import { CantoTest, CantoMain} from "global/config/networks"
 import ADDRESSES from "global/config/addresses";
-import { Token, TOKENS as ALLTOKENS} from "global/config/tokens";
+import {TOKENS as ALLTOKENS} from "global/config/tokens";
 
 
 
@@ -194,9 +194,9 @@ const useTokens = (account: string | undefined, chainId: number | undefined) => 
 
       const totalValueLocked = Number(LPUnderlyingPriceInNote) * Number(totalSupply);
 
-      let test: AllPairInfo;
+      let moreData: AllPairInfo;
 
-      test = {
+      moreData = {
         basePairInfo: PAIRS[idx],
         totalSupply: {
           totalLP: totalSupply,
@@ -225,7 +225,7 @@ const useTokens = (account: string | undefined, chainId: number | undefined) => 
           token2: token2Balance,
         },
       };
-      return test;
+      return moreData;
     });
     return val;
   }

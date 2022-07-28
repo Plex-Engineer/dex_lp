@@ -1,6 +1,7 @@
 import Dex from 'pages/main/Dex'
 import './App.scss'
 import { Overlay, ScanLine, ScanlinesOverlay, StaticNoiseOverlay } from 'global/styled-components/Overlays'
+import NavBar from 'global/components/navbar'
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
       <ScanlinesOverlay />
       <ScanLine/>
       <Overlay/>
+      <NavBar/>
       <Dex/>
     </div>
   )

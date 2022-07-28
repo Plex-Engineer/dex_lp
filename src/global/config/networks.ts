@@ -10,7 +10,7 @@ export const getTransactionLink = (explorerUrl: string) => (txnId: string) => `$
 export const CantoTest: Chain = {
   chainId: 771,
   chainName: 'Canto Test',
-  rpcUrl : "http://165.227.98.94:8545",
+  rpcUrl : "http://165.227.98.94:1317",
   isTestChain: true,
   isLocalChain: false,
   multicallAddress: '0xaEc0D885BBFa4B339eFCd490c50053738A872fd0',
@@ -35,10 +35,10 @@ export const CantoMain: Chain = {
 
 
 
-const config: Config = {
+export const config: Config = {
   networks : [CantoTest, CantoMain],
   readOnlyUrls: {
-    [CantoTest.chainId]: "http://165.227.98.94:8545",
+    [CantoTest.chainId]: "https://canto.evm.chandrastation.com/",
     [CantoMain.chainId] : "https://eth.plexnode.wtf"
   },
   noMetamaskDeactivate : true,
