@@ -1,5 +1,5 @@
 
-const LendingMarket = () => {
+const Dex = () => {
   return (
     <div style={{
       height : "1000px"
@@ -7,4 +7,4 @@ const LendingMarket = () => {
   )
 }
 
-export default LendingMarket
+export default Dex
