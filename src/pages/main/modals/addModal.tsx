@@ -1,16 +1,15 @@
-import styled from "styled-components";
-import DuxField from "components/dex/duxField";
-import DexInput from "components/dex/dexInput";
-import { AllPairInfo } from "hooks/dex/useDex";
+import styled from "@emotion/styled";
+import Field from "../components/field";
+import Input from "../components/input";
+import { AllPairInfo } from "../hooks/useTokens";
 import { useEffect, useState } from "react";
-import { getTokenAFromB, getTokenBFromA } from "hooks/dex/autofillFunctions";
-import { getRouterAddress, useSetAllowance } from "hooks/dex/provideLiquidityFunctions";
-import { useDexModalType } from "providers/dexContext";
-import { DexModalType } from "./dexModalManager";
-import LoadingModal from "../loadingModal";
+import { getRouterAddress, useSetAllowance } from "pages/main/hooks/useTransactions";
+// import { useDexModalType } from "providers/dexContext";
+// import { DexModalType } from "./dexModalManager";
+import LoadingModal from "./loadingModal";
 import SettingsIcon from "assets/settings.svg"
-import IconPair from "components/dex/iconPair";
-import { truncateNumber } from "hooks/dex/autofillFunctions";
+import IconPair from "../components/iconPair";
+import { truncateNumber,getTokenAFromB, getTokenBFromA } from "../utils";
 
 const Container = styled.div`
   background-color: #040404;
@@ -284,7 +283,7 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
       </div>
       <div className="fields">
         <div className="field">
-          <DuxField
+          <Field
             token={value.basePairInfo.token1.symbol}
             icon={value.basePairInfo.token1.icon}
             remaining = {Number(value.balances.token1) - Number(value1)}
@@ -299,7 +298,7 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
           />
         </div>
         <div className="field">
-          <DuxField
+          <Field
           icon={value.basePairInfo.token2.icon}
             token={value.basePairInfo.token2.symbol}
             remaining = {Number(value.balances.token2) - Number(value2)}
@@ -324,10 +323,10 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
       }}>
         <PopIn show={openSettings} style={!openSettings ? { zIndex: "-1" } : {marginBottom: "-15px"}}>
         <div className="field">
-          <DexInput name="Slippage tolerance %" value={slippage} onChange={(s) => setSlippage(s)} />
+          <Input name="Slippage tolerance %" value={slippage} onChange={(s) => setSlippage(s)} />
         </div>
         <div className="field">
-          <DexInput name="Transaction deadline (minutes)" value={deadline} onChange={(d) => setDeadline(d)} />
+          <Input name="Transaction deadline (minutes)" value={deadline} onChange={(d) => setDeadline(d)} />
         </div>
       </PopIn>
       </div>

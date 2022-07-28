@@ -1,7 +1,7 @@
 import { ethers, Contract } from "ethers";
 import styled from "@emotion/styled";
-import { AllPairInfo } from "hooks/dex/useDex";
-import { useDexModalType } from "providers/dexContext";
+import { AllPairInfo } from "../hooks/useTokens";
+// import { useDexModalType } from "providers/dexContext";
 import { useAddLiquidity, useAddLiquidityCANTO } from "hooks/dex/provideLiquidityFunctions";
 import { parseUnits } from "ethers/lib/utils";
 import { routerAbi } from "constants/dex/abi";

@@ -1,10 +1,10 @@
-import { AllPairInfo } from "hooks/dex/useDex";
-import styled from "styled-components";
+import { AllPairInfo } from "../hooks/useTokens";
+import styled from "@emotion/styled";
 import icon from "assets/icons/canto.png";
-import { noteSymbol } from "utils";
+import { noteSymbol } from "global/utils/utils";
 import { DexModalType } from "./dexModalManager";
-import { useDexModalType } from "providers/dexContext";
-import IconPair from "components/dex/iconPair";
+// import { useDexModalType } from "providers/dexContext";
+import IconPair from "../components/iconPair";
 const Container = styled.div`
   background-color: #040404;
   height: 36rem;
