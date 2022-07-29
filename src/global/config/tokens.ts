@@ -1,5 +1,12 @@
 import addresses from "global/config/addresses"
 
+import ETH from "assets/icons/ETH.svg";
+import NOTE from "assets/icons/note.svg";
+import CANTO from "assets/icons/canto.png";
+import USDC from "assets/icons/USDC.svg";
+import USDT from "assets/icons/USDT.svg";
+import ATOM from "assets/icons/ATOM.svg";
+
 export interface Token {
     symbol: string,
     name: string,
@@ -18,13 +25,27 @@ export interface CTOKEN {
     underlying: Token
 }
 
-const icons = {
+const metaMaskIcons = {
     Note: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/note.svg",
     CANTO: "https://raw.githubusercontent.com/Canto-Network/list/main/logos/token-logos/token/canto.png",
     USDT: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/USDT.svg",
     USDC: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/USDC.svg",
     ETH: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/ETH.svg",
     ATOM: "https://raw.githubusercontent.com/Canto-Network/list/22d70677e03cd416cdc388f6b36e5c6453abc48e/logos/token-logos/token/ATOM.svg",
+    CantoAtomLP: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/CantoAtomLP.svg",
+    CantoETHLP: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/CantoETHLP.svg",
+    CantoNoteLP: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/CantoNoteLP.svg",
+    USDCNoteLP: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/USDCNoteLP.svg",
+    USDTNoteLP: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/USDTNoteLP.svg",
+};
+
+const icons = {
+    Note: NOTE,
+    CANTO: CANTO,
+    USDT: USDT,
+    USDC: USDC,
+    ETH: ETH,
+    ATOM: ATOM,
     CantoAtomLP: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/CantoAtomLP.svg",
     CantoETHLP: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/CantoETHLP.svg",
     CantoNoteLP: "https://raw.githubusercontent.com/Canto-Network/list/a4c12b3cbe13a9c7583b8db3c3de2883f05e864d/logos/token-logos/token/CantoNoteLP.svg",
