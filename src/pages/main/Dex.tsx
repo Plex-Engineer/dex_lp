@@ -10,7 +10,12 @@ import { noteSymbol } from "global/utils/utils";
 // import { useDexModalType } from "providers/dexContext";
 import { toast } from "react-toastify";
 import { useNotifications, useEthers } from "@usedapp/core";
-import { addNetwork, checkNetworkVersion } from "global/config/addCantoToWallet";
+import {
+  addNetwork,
+  checkNetworkVersion,
+} from "global/config/addCantoToWallet";
+import useModals, { ModalType } from "./hooks/useModals";
+import { ModalManager } from "./modals/BaseModal";
 
 const Container = styled.div`
   display: flex;
@@ -29,14 +34,13 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     text-shadow: 0px 14px 14px rgba(6, 252, 153, 0.2);
-
   }
 
   & > button {
     background-color: var(--primary-color);
     border: none;
     border-radius: 0px;
-    padding: .6rem 2.4rem;
+    padding: 0.6rem 2.4rem;
     font-size: 1.2rem;
     font-weight: 500;
     letter-spacing: -0.03em;
@@ -44,36 +48,32 @@ const Container = styled.div`
     margin: 0 auto;
     margin-bottom: 3rem;
 
-
     &:hover {
       background-color: var(--primary-color-dark);
     }
   }
-  
-  @media (max-width: 1000px){
-   h1 {
-    font-size: 20vw;
-   }
+
+  @media (max-width: 1000px) {
+    h1 {
+      font-size: 20vw;
+    }
   }
- 
 `;
-
-
 
 const Dex = () => {
   const [isOpen, setIsOpen] = useState(false);
   // Mixpanel.events.pageOpened("Dex Market", '');
   const [loading, setLoading] = useState(true);
   const { account, chainId, switchNetwork } = useEthers();
-  const [currentPair, setCurrentPair] = useState<AllPairInfo>()
+  const [currentPair, setCurrentPair] = useState<AllPairInfo>();
   const { notifications } = useNotifications();
   const [notifs, setNotifs] = useState<any[]>([]);
 
-  // const [modalType, setModalType] = useDexModalType();
+  const setModalType = useModals((state) => state.setModalType);
   const pairs = useDex(account, chainId);
-  
+
   function openModal(data: AllPairInfo) {
-    setCurrentPair(data)
+    setCurrentPair(data);
     setIsOpen(true);
   }
 
@@ -91,9 +91,6 @@ const Dex = () => {
       setIsOnMain(onCantoNetwork);
     }, 2000);
   }, [chainId]);
-
-
-
 
   useEffect(() => {
     notifications.forEach((item) => {
@@ -129,13 +126,12 @@ const Dex = () => {
           case "add":
             msg.type = "added";
             break;
-            case "remove":
-              msg.type = "removed";
-              break;
+          case "remove":
+            msg.type = "removed";
+            break;
           case "Enable":
             msg.type = "enabled";
             break;
-
         }
 
         const msged =
@@ -151,16 +147,18 @@ const Dex = () => {
           pauseOnHover: true,
           draggable: true,
           progressStyle: {
-            color: `${isSuccesful ? "var(--primary-color)" : "var(--error-color"
-              }`,
+            color: `${
+              isSuccesful ? "var(--primary-color)" : "var(--error-color"
+            }`,
           },
           style: {
             border: "1px solid var(--primary-color)",
             borderRadius: "0px",
             paddingBottom: "3px",
             background: "black",
-            color: `${isSuccesful ? "var(--primary-color)" : "var(--error-color"
-              }`,
+            color: `${
+              isSuccesful ? "var(--primary-color)" : "var(--error-color"
+            }`,
             height: "100px",
             fontSize: "20px",
           },
@@ -169,77 +167,125 @@ const Dex = () => {
     });
   }, [notifications]);
 
-
-  return (
-    !isOnMain ? 
-      <div style={{ color: "red", textAlign: "center" }}>
-        <h1>please switch to canto mainnet</h1>
-      </div>
-     :
+  return !isOnMain ? (
+    <div style={{ color: "red", textAlign: "center" }}>
+      <h1>please switch to canto mainnet</h1>
+    </div>
+  ) : (
     <Container>
-     
       {/* <Helmet>
         <meta charSet="utf-8" />
         <title>Canto Dex | A Foundation Layer for Cross-chain Compatibility.</title>
       </Helmet> */}
-      <div style={{marginBottom: "75px"}}>
-{/* 
-        <DexModalManager isOpen={modalType != DexModalType.NONE} modalType={modalType} data={currentPair} chainId={chainId} account={account} onClose={() => {
-          setIsOpen(false)
-          setModalType(DexModalType.NONE)
-        }} /> */}
+      <div style={{ marginBottom: "75px" }}>
+        <ModalManager
+          data={currentPair}
+          chainId={chainId}
+          account={account}
+          onClose={() => {
+            setIsOpen(false);
+            setModalType(ModalType.NONE);
+          }}
+        />
       </div>
       {/* <h1>&gt;_dex LP_</h1> */}
-      <h4 style={{textAlign: "center"}}>to swap tokens, visit <a style={{color: "white"}} href="https://app.slingshot.finance/trade/">Slingshot</a></h4>
+      <h4 style={{ textAlign: "center" }}>
+        to swap tokens, visit{" "}
+        <a
+          style={{ color: "white" }}
+          href="https://app.slingshot.finance/trade/"
+        >
+          Slingshot
+        </a>
+      </h4>
 
+      {pairs?.filter((pair: AllPairInfo) => Number(pair.userSupply.totalLP) > 0)
+        .length ?? 0 > 0 ? (
+        <div>
+          <p
+            style={{
+              width: "1200px",
+              margin: "0 auto",
+              padding: "0",
+            }}
+          >
+            current position
+          </p>
+          <DexTable>
+            {pairs?.map((pair: AllPairInfo) => {
+              return Number(pair.userSupply.totalLP) > 0 ? (
+                <DexRow
+                  key={pair.basePairInfo.address}
+                  iconLeft={pair.basePairInfo.token1.icon}
+                  iconRight={pair.basePairInfo.token2.icon}
+                  onClick={() => {
+                    setModalType( Number(pair.userSupply.totalLP) > 0 ? ModalType.ADD_OR_REMOVE : ModalType.ADD)
+                    openModal(pair);
+                  }}
+                  assetName={
+                    pair.basePairInfo.token1.symbol +
+                    "/" +
+                    pair.basePairInfo.token2.symbol
+                  }
+                  totalValueLocked={noteSymbol + pair.totalSupply.tvl}
+                  apr={"23.2"}
+                  position={
+                    Number(pair.userSupply.totalLP).toFixed(4) + " LP Tokens"
+                  }
+                  share={(pair.userSupply.percentOwned * 100)
+                    .toFixed(2)
+                    .toString()}
+                />
+              ) : null;
+            })}
+          </DexTable>
+        </div>
+      ) : null}
 
-{
-  pairs?.filter((pair:AllPairInfo) => (Number(pair.userSupply.totalLP) > 0)).length ?? 0 > 0 ? 
-
-      <div>
-      <p style={{
-        width : "1200px",
-        margin: "0 auto",
-        padding : "0"
-      }}>current position</p>
-      <DexTable>
-        {
-          pairs?.map( (pair:AllPairInfo) => {
-            return Number(pair.userSupply.totalLP) > 0 ?
-             <DexRow key={pair.basePairInfo.address} iconLeft={pair.basePairInfo.token1.icon} iconRight={pair.basePairInfo.token2.icon} onClick={() => {
-              // setModalType([ Number(pair.userSupply.totalLP) > 0 ? DexModalType.ADDREMOVE : DexModalType.ADD, {}])
-              openModal(pair);
-            }} assetName={pair.basePairInfo.token1.symbol + "/" + pair.basePairInfo.token2.symbol} totalValueLocked={noteSymbol + pair.totalSupply.tvl} apr={"23.2"} position={Number(pair.userSupply.totalLP).toFixed(4) + " LP Tokens"} share={(pair.userSupply.percentOwned * 100).toFixed(2).toString()} />
-            : null;
-          }) 
-        }
-      </DexTable>
-      </div> : null 
-      }
-
-{
-  pairs?.filter((pair:AllPairInfo) => (Number(pair.userSupply.totalLP) == 0)).length ?? 0 > 0 ? 
-
-      <div>
-          <p style={{
-        width : "1200px",
-        margin: "0 auto",
-        padding : "0"
-      }}>pools</p>
-      <DexTable>
-      {
-          pairs?.map( (pair:AllPairInfo) => {
-            return Number(pair.userSupply.totalLP) > 0 ? null :
-             <DexRow key={pair.basePairInfo.address} iconLeft={pair.basePairInfo.token1.icon} iconRight={pair.basePairInfo.token2.icon} onClick={() => {
-              // setModalType([ Number(pair.userSupply.totalLP) > 0 ? DexModalType.ADDREMOVE : DexModalType.ADD, {}])
-              openModal(pair);
-            }} assetName={pair.basePairInfo.token1.symbol + "/" + pair.basePairInfo.token2.symbol} totalValueLocked={noteSymbol + pair.totalSupply.tvl} apr={"23.2"} position={Number(pair.userSupply.totalLP).toFixed(4) + " LP Tokens"} share={(pair.userSupply.percentOwned * 100).toFixed(2).toString()} />
-            ;
-          }) 
-        }
-      </DexTable>
-      </div> : null
-      } 
+      {pairs?.filter(
+        (pair: AllPairInfo) => Number(pair.userSupply.totalLP) == 0
+      ).length ?? 0 > 0 ? (
+        <div>
+          <p
+            style={{
+              width: "1200px",
+              margin: "0 auto",
+              padding: "0",
+            }}
+          >
+            pools
+          </p>
+          <DexTable>
+            {pairs?.map((pair: AllPairInfo) => {
+              return Number(pair.userSupply.totalLP) > 0 ? null : (
+                <DexRow
+                  key={pair.basePairInfo.address}
+                  iconLeft={pair.basePairInfo.token1.icon}
+                  iconRight={pair.basePairInfo.token2.icon}
+                  onClick={() => {
+                    
+                    setModalType( Number(pair.userSupply.totalLP) > 0 ? ModalType.ADD_OR_REMOVE : ModalType.ADD)
+                    openModal(pair);
+                  }}
+                  assetName={
+                    pair.basePairInfo.token1.symbol +
+                    "/" +
+                    pair.basePairInfo.token2.symbol
+                  }
+                  totalValueLocked={noteSymbol + pair.totalSupply.tvl}
+                  apr={"23.2"}
+                  position={
+                    Number(pair.userSupply.totalLP).toFixed(4) + " LP Tokens"
+                  }
+                  share={(pair.userSupply.percentOwned * 100)
+                    .toFixed(2)
+                    .toString()}
+                />
+              );
+            })}
+          </DexTable>
+        </div>
+      ) : null}
     </Container>
   );
 };

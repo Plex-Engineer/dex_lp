@@ -1,16 +1,15 @@
-import styled from "styled-components";
-import DuxField from "components/dex/duxField";
-import DexInput from "components/dex/dexInput";
-import { AllPairInfo } from "hooks/dex/useDex";
+import styled from "@emotion/styled";
+import Field from "../components/field";
+import Input from "../components/input";
+import { AllPairInfo } from "../hooks/useTokens";
 import { useEffect, useState } from "react";
-import { noteSymbol } from "utils";
-import { useDexModalType } from "providers/dexContext";
-import { DexModalType } from "./dexModalManager";
-import { getRouterAddress, useSetAllowance } from "hooks/dex/provideLiquidityFunctions";
-import LoadingModal from "../loadingModal";
+import { noteSymbol } from "global/utils/utils";
+import { getRouterAddress, useSetAllowance } from "pages/main/hooks/useTransactions";
+import LoadingModal from "./loadingModal";
 import { DexLoadingOverlay, PopIn } from "./addModal";
 import SettingsIcon from "assets/settings.svg"
-import IconPair from "components/dex/iconPair";
+import IconPair from "../components/iconPair";
+import useModals, { ModalType } from "../hooks/useModals";
 
 const Container = styled.div`
   background-color: #040404;
@@ -131,18 +130,18 @@ export const RowCell = (props: RowCellProps) => {
 
 interface ConfirmButtonProps {
   pair: AllPairInfo;
-  percentage: string;
-  value1: string;
-  value2: string;
-  slippage: string;
-  deadline: string;
+  percentage: number;
+  amount1: number;
+  amount2: number;
+  slippage: number;
+  deadline: number;
   chainId?: number;
   status: (val: string) => void,
 
 }
 
 const ConfirmButton = (props: ConfirmButtonProps) => {
-  const [modalType, setModalType] = useDexModalType();
+  const [setModalType, setConfirmationValues] = useModals(state => [state.setModalType, state.setConfirmationValues]);
   const { state: addAllowance, send: addAllowanceSend } = useSetAllowance({
     type : "Enable",
     address : props.pair.basePairInfo.address,
@@ -161,7 +160,7 @@ const ConfirmButton = (props: ConfirmButtonProps) => {
     props.status(addAllowance.status)
     if (addAllowance.status == "Success") {
       setTimeout(() => {
-        setModalType(DexModalType.NONE);
+        setModalType(ModalType.NONE);
       }, 500)
     }
   }, [addAllowance.status])
@@ -180,13 +179,14 @@ const ConfirmButton = (props: ConfirmButtonProps) => {
     return <DisabledButton>Enter all values</DisabledButton>
   } else {
     return <Button onClick={() => {
-      setModalType([DexModalType.REMOVECONFIRM, {
-        value1: props.value1,
-        value2: props.value2,
-        percentage: props.percentage,
-        slippage: props.slippage,
-        deadline: props.deadline
-      }])
+      setConfirmationValues({
+        amount1 : props.amount1,
+        amount2 : props.amount2,
+        percentage : props.percentage,
+        slippage : props.slippage,
+        deadline : props.deadline
+      })
+      setModalType(ModalType.REMOVE_CONFIRM)
     }}
     >remove liquidity</Button>
   }
@@ -237,7 +237,7 @@ const RemoveModal = ({ value, onClose, chainId, account }: Props) => {
 
       </div>
       <div className="field" style={{ width: "100%", padding: "0 2rem",marginTop : "1rem" }}>
-        <DexInput name="Percent to remove" value={percentage} onChange={(percentage) => {
+        <Input name="Percent to remove" value={percentage} onChange={(percentage) => {
           setPercentage(percentage);
           setValue1(isNaN(Number(percentage)) ? 0 : (Number(percentage) * Number(value.userSupply.token1) / 100))
           setValue2(isNaN(Number(percentage)) ? 0 : (Number(percentage) * Number(value.userSupply.token2) / 100))
@@ -269,11 +269,11 @@ const RemoveModal = ({ value, onClose, chainId, account }: Props) => {
         status={setTokenAllowanceStatus}
 
         pair={value}
-        percentage={percentage}
-        value1={value1.toString()}
-        value2={value2.toString()}
-        slippage={slippage}
-        deadline={deadline}
+        percentage={Number(percentage)}
+        amount1={value1}
+        amount2={value2}
+        slippage={Number(slippage)}
+        deadline={Number(deadline)}
         chainId={chainId}
       />
       <div className="fields" style={{
@@ -283,10 +283,10 @@ const RemoveModal = ({ value, onClose, chainId, account }: Props) => {
       }}>
         <PopIn show={openSettings} style={!openSettings ? { zIndex: "-1" } : { marginBottom: "-15px" }}>
           <div className="field">
-            <DexInput name="Slippage tolerance %" value={slippage} onChange={(s) => setSlippage(s)} />
+            <Input name="Slippage tolerance %" value={slippage} onChange={(s) => setSlippage(s)} />
           </div>
           <div className="field">
-            <DexInput name="Transaction deadline (minutes)" value={deadline} onChange={(d) => setDeadline(d)} />
+            <Input name="Transaction deadline (minutes)" value={deadline} onChange={(d) => setDeadline(d)} />
           </div>
         </PopIn>
       </div>

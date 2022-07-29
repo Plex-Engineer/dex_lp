@@ -1,10 +1,8 @@
 import { AllPairInfo } from "../hooks/useTokens";
 import styled from "@emotion/styled";
-import icon from "assets/icons/canto.png";
 import { noteSymbol } from "global/utils/utils";
-import { DexModalType } from "./dexModalManager";
-// import { useDexModalType } from "providers/dexContext";
 import IconPair from "../components/iconPair";
+import useModals, { ModalType } from "../hooks/useModals";
 const Container = styled.div`
   background-color: #040404;
   height: 36rem;
@@ -123,7 +121,7 @@ interface Props {
   account?: string;
 }
 const AddRemoveModal = ({ value, onClose, chainId, account }: Props) => {
-  const [modalType, setModalType] = useDexModalType();
+ const setModalType = useModals(state => state.setModalType);
 
   return (
     <Container>
@@ -157,12 +155,12 @@ const AddRemoveModal = ({ value, onClose, chainId, account }: Props) => {
       </div>
       <div className="fields">
         <SecondaryButton onClick={() => {
-          setModalType([DexModalType.REMOVE, {}]);
+          setModalType(ModalType.REMOVE);
 
         }}>Remove</SecondaryButton>
 
         <PrimaryButton onClick={() => {
-          setModalType([DexModalType.ADD, {}]);
+          setModalType(ModalType.ADD);
 
         }}>Add</PrimaryButton>
       </div>

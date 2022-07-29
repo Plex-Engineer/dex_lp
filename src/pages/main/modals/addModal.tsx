@@ -4,12 +4,11 @@ import Input from "../components/input";
 import { AllPairInfo } from "../hooks/useTokens";
 import { useEffect, useState } from "react";
 import { getRouterAddress, useSetAllowance } from "pages/main/hooks/useTransactions";
-// import { useDexModalType } from "providers/dexContext";
-// import { DexModalType } from "./dexModalManager";
 import LoadingModal from "./loadingModal";
 import SettingsIcon from "assets/settings.svg"
 import IconPair from "../components/iconPair";
 import { truncateNumber,getTokenAFromB, getTokenBFromA } from "../utils";
+import useModals, { ModalType } from "../hooks/useModals";
 
 const Container = styled.div`
   background-color: #040404;
@@ -100,7 +99,7 @@ interface AddAllowanceProps {
 }
 
 const AddAllowanceButton = (props: AddAllowanceProps) => {
-  const [modalType, setModalType] = useDexModalType();
+  const setModalType = useModals(state => state.setModalType);
   const routerAddress = getRouterAddress(props.chainId);
   const needToken1Allowance = Number(props.value1) > Number(props.pair.allowance.token1);
   const needToken2Allowance = Number(props.value2) > Number(props.pair.allowance.token2);
@@ -124,7 +123,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
     props.status1(addAllowanceA.status)
     if (addAllowanceA.status == "Success") {
       setTimeout(() => {
-          setModalType(DexModalType.NONE);
+          setModalType(ModalType.NONE);
       }, 500)
   }
   },[addAllowanceA.status])
@@ -132,7 +131,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
     props.status2(addAllowanceB.status)
     if (addAllowanceB.status == "Success") {
       setTimeout(() => {
-          setModalType(DexModalType.NONE);
+          setModalType(ModalType.NONE);
       }, 500)
   }
   },[addAllowanceB.status])
@@ -169,12 +168,12 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
       return <DisabledButton>Enter amount</DisabledButton>
     } else {
       return <Button onClick={() => {
-        setModalType([DexModalType.ADDCONFIRM, {
-          value1: props.value1,
-          value2: props.value2,
-          slippage: props.slippage,
-          deadline: props.deadline
-        }])
+        // setModalType([DexModalType.ADDCONFIRM, {
+        //   value1: props.value1,
+        //   value2: props.value2,
+        //   slippage: props.slippage,
+        //   deadline: props.deadline
+        // }])
       }}
       >Add Liquidity</Button>
     }

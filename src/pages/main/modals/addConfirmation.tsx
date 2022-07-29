@@ -1,20 +1,19 @@
 import { ethers, Contract } from "ethers";
 import styled from "@emotion/styled";
 import { AllPairInfo } from "../hooks/useTokens";
-// import { useDexModalType } from "providers/dexContext";
-import { useAddLiquidity, useAddLiquidityCANTO } from "hooks/dex/provideLiquidityFunctions";
+import { useAddLiquidity, useAddLiquidityCANTO } from "pages/main/hooks/useTransactions";
 import { parseUnits } from "ethers/lib/utils";
-import { routerAbi } from "constants/dex/abi";
-import IconPair from "components/dex/iconPair";
+import { routerAbi } from "pages/main/config/abi"
+import IconPair from "../components/iconPair";
 import { RowCell } from "./removeModal";
 import { DexLoadingOverlay } from "./addModal";
-import LoadingModal from "../loadingModal";
+import LoadingModal from "./loadingModal";
 import { useEffect, useState } from "react";
-import { DexModalType } from "./dexModalManager";
-import { truncateNumber } from "hooks/dex/autofillFunctions";
-// import { CantoTest, CantoMain } from "providers/index";
+import { truncateNumber } from "pages/main/utils";
+import { CantoTest, CantoMain } from "global/config/networks";
 import { TOKENS as ALLTOKENS } from "global/config/tokens";
 import ADDRESSES from "global/config/addresses";
+import useModals, { ModalType } from "../hooks/useModals";
 
 
 
@@ -137,10 +136,10 @@ const DisabledButton = styled.button`
 
 interface AddConfirmationProps {
     pair: AllPairInfo;
-    value1: string;
-    value2: string;
-    slippage: string;
-    deadline: string;
+    value1: number;
+    value2: number;
+    slippage: number;
+    deadline: number;
     chainId?: number;
     account?: string;
     expectedLP: string;
@@ -168,7 +167,7 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
     // const [addLiquidityStatus, setAddLiquidity1Status] = useState("None");
     // const [addLiquidityCantoStatus, setAddLiquidityCantp2Status] = useState("None");
     const TOKENS = props.chainId == CantoTest.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet;
-    const [modalType, setModalType] = useDexModalType();
+    const setModalType = useModals(state => state.setModalType);
     
     const amountOut1 = truncateNumber(Number(props.value1),props.pair.basePairInfo.token1.decimals).toString();
     const amountOut2 = truncateNumber(Number(props.value2),props.pair.basePairInfo.token2.decimals).toString();
@@ -194,7 +193,7 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
     useEffect(() => {
         if (addLiquidityState.status == "Success" || addLiquidityCANTOState.status == "Success") {
             setTimeout(() => {
-                setModalType(DexModalType.NONE);
+                setModalType(ModalType.NONE);
             }, 500)
         }
     }, [addLiquidityState.status, addLiquidityCANTOState.status])
@@ -298,12 +297,11 @@ interface Props {
 }
 
 export const AddLiquidityConfirmation = (props: Props) => {
-    const [modalType, setModalType] = useDexModalType();
+    const [modalType, confirmValues] = useModals(state => [state.modalType, state.confirmationValues]);
     const [expectedLP, setExpectedLP] = useState("0");
-    const addLiquidityParameters = modalType[1];
 
-    const amountOut1 = Number(addLiquidityParameters.value1).toFixed(props.value.basePairInfo.token1.decimals);
-    const amountOut2 = Number(addLiquidityParameters.value2).toFixed(props.value.basePairInfo.token2.decimals);
+    const amountOut1 = Number(confirmValues.amount1).toFixed(props.value.basePairInfo.token1.decimals);
+    const amountOut2 = Number(confirmValues.amount2).toFixed(props.value.basePairInfo.token2.decimals);
 
 
     async function getExpectedLP() {
@@ -336,10 +334,10 @@ export const AddLiquidityConfirmation = (props: Props) => {
         <div>
             <AddLiquidityButton
                 pair={props.value}
-                value1={addLiquidityParameters.value1}
-                value2={addLiquidityParameters.value2}
-                slippage={addLiquidityParameters.slippage}
-                deadline={addLiquidityParameters.deadline}
+                value1={confirmValues.amount1}
+                value2={confirmValues.amount2}
+                slippage={confirmValues.slippage}
+                deadline={confirmValues.deadline}
                 chainId={props.chainId}
                 account={props.account}
                 expectedLP={expectedLP}

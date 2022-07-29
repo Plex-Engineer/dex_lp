@@ -1,18 +1,17 @@
 import { ethers } from "ethers";
-import styled from "styled-components";
-import { AllPairInfo } from "hooks/dex/useDex";
-import { useDexModalType } from "providers/dexContext";
-import { useRemoveLiquidity, useRemoveLiquidityCANTO } from "hooks/dex/provideLiquidityFunctions";
-import LoadingModal from "../loadingModal";
+import styled from "@emotion/styled";
+import { AllPairInfo } from "../hooks/useTokens";
+import { useRemoveLiquidity, useRemoveLiquidityCANTO } from "pages/main/hooks/useTransactions";
+import LoadingModal from "./loadingModal";
 import { DexLoadingOverlay } from "./addModal";
-import IconPair from "components/dex/iconPair";
 import { RowCell } from "./removeModal";
-import { DexModalType } from "./dexModalManager";
+import { ModalType } from "../hooks/useModals";
 import { useEffect } from "react";
-import { truncateNumber } from "hooks/dex/autofillFunctions";
+import { truncateNumber } from "pages/main/utils";
 import { useState } from "react";
-import { CantoTest, CantoMain } from "providers/index";
-import { TOKENS as ALLTOKENS } from "constants/tokens";
+import { CantoTest, CantoMain } from "global/config/networks";
+import { TOKENS as ALLTOKENS } from "global/config/tokens";
+import useModals from "../hooks/useModals";
 
 
 
@@ -136,11 +135,11 @@ const DisabledButton = styled.button`
 
 interface RemoveConfirmationProps {
     pair: AllPairInfo;
-    value1: string;
-    value2: string;
-    percentage: string;
-    slippage: string;
-    deadline: string;
+    value1: number;
+    value2: number;
+    percentage: number;
+    slippage: number;
+    deadline: number;
     chainId?: number;
     account?: string;
 }
@@ -160,11 +159,11 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
         icon : "",
         name : props.pair.basePairInfo.token1.symbol + "/" + props.pair.basePairInfo.token2.symbol
     });
-    const [modalType, setModalType] = useDexModalType();
+    const setModalType = useModals(state => state.setModalType);
 
     const TOKENS = props.chainId == CantoTest.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet;
 
-    const LPOut = props.percentage == "100" ? props.pair.userSupply.totalLP : truncateNumber(((Number((props.pair.userSupply.totalLP)) * Number(props.percentage)) / 100), props.pair.basePairInfo.decimals).toString();
+    const LPOut = props.percentage == 100 ? props.pair.userSupply.totalLP : truncateNumber(((Number((props.pair.userSupply.totalLP)) * Number(props.percentage)) / 100), props.pair.basePairInfo.decimals).toString();
     const amountMinOut1 = truncateNumber((((Number(props.value1)) * (100 - Number(props.slippage))) / 100), props.pair.basePairInfo.token1.decimals).toString();
     const amountMinOut2 = truncateNumber((((Number(props.value2)) * (100 - Number(props.slippage))) / 100), props.pair.basePairInfo.token2.decimals).toString();
 
@@ -186,7 +185,7 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
     useEffect(() => {
         if (removeLiquidityState.status == "Success" || removeLiquidityCANTOState.status == "Success") {
             setTimeout(() => {
-                setModalType(DexModalType.NONE);
+                setModalType(ModalType.NONE);
             }, 500)
         }
     }, [removeLiquidityState.status, removeLiquidityCANTOState.status])
@@ -300,22 +299,18 @@ interface Props {
 }
 
 export const RemoveLiquidityConfirmation = (props: Props) => {
-    const [modalType, setModalType] = useDexModalType();
-    const removeLiquidityParameters = modalType[1];
-
-
-
+    const [modalType, confirmValues] = useModals(state => [state.modalType, state.confirmationValues]);
 
     return (
 
 
         <RemoveLiquidityButton
             pair={props.value}
-            value1={removeLiquidityParameters.value1}
-            value2={removeLiquidityParameters.value2}
-            percentage={removeLiquidityParameters.percentage}
-            slippage={removeLiquidityParameters.slippage}
-            deadline={removeLiquidityParameters.deadline}
+            value1={confirmValues.amount1}
+            value2={confirmValues.amount2}
+            percentage={confirmValues.percentage}
+            slippage={confirmValues.slippage}
+            deadline={confirmValues.deadline}
             chainId={props.chainId}
             account={props.account}
         ></RemoveLiquidityButton>
