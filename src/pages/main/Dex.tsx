@@ -12,7 +12,7 @@ import {
   checkNetworkVersion,
 } from "global/config/addCantoToWallet";
 import useModals, { ModalType } from "./hooks/useModals";
-import { ModalManager } from "./modals/BaseModal";
+import { ModalManager } from "./modals/ModalManager";
 
 const Container = styled.div`
   display: flex;
@@ -58,21 +58,15 @@ const Container = styled.div`
 `;
 
 const Dex = () => {
-  const [isOpen, setIsOpen] = useState(false);
   // Mixpanel.events.pageOpened("Dex Market", '');
-  const [loading, setLoading] = useState(true);
-  const { account, chainId, switchNetwork } = useEthers();
-  const [currentPair, setCurrentPair] = useState<AllPairInfo>();
+  const { account, chainId } = useEthers();
   const { notifications } = useNotifications();
   const [notifs, setNotifs] = useState<any[]>([]);
 
-  const setModalType = useModals((state) => state.setModalType);
+  const [setModalType, activePair, setActivePair] = useModals((state) => [state.setModalType, state.activePair, state.setActivePair]);
   const pairs = useDex(account, chainId);
 
-  function openModal(data: AllPairInfo) {
-    setCurrentPair(data);
-    setIsOpen(true);
-  }
+ 
 
   //Let the user know they are on the wrong network
   const [isOnMain, setIsOnMain] = useState(true);
@@ -170,22 +164,16 @@ const Dex = () => {
     </div>
   ) : (
     <Container>
-      {/* <Helmet>
-        <meta charSet="utf-8" />
-        <title>Canto Dex | A Foundation Layer for Cross-chain Compatibility.</title>
-      </Helmet> */}
       <div style={{ marginBottom: "75px" }}>
         <ModalManager
-          data={currentPair}
+          data={activePair}
           chainId={chainId}
           account={account}
           onClose={() => {
-            setIsOpen(false);
             setModalType(ModalType.NONE);
           }}
         />
       </div>
-      {/* <h1>&gt;_dex LP_</h1> */}
       <h4 style={{ textAlign: "center" }}>
         to swap tokens, visit{" "}
         <a
@@ -216,8 +204,8 @@ const Dex = () => {
                   iconLeft={pair.basePairInfo.token1.icon}
                   iconRight={pair.basePairInfo.token2.icon}
                   onClick={() => {
+                    setActivePair(pair)
                     setModalType( Number(pair.userSupply.totalLP) > 0 ? ModalType.ADD_OR_REMOVE : ModalType.ADD)
-                    openModal(pair);
                   }}
                   assetName={
                     pair.basePairInfo.token1.symbol +
@@ -260,9 +248,8 @@ const Dex = () => {
                   iconLeft={pair.basePairInfo.token1.icon}
                   iconRight={pair.basePairInfo.token2.icon}
                   onClick={() => {
-                    
+                    setActivePair(pair)
                     setModalType( Number(pair.userSupply.totalLP) > 0 ? ModalType.ADD_OR_REMOVE : ModalType.ADD)
-                    openModal(pair);
                   }}
                   assetName={
                     pair.basePairInfo.token1.symbol +

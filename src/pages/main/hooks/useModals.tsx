@@ -1,6 +1,7 @@
 import { TransactionState } from "@usedapp/core";
 import create from "zustand"
 import {devtools} from "zustand/middleware"
+import { AllPairInfo } from "./useTokens";
 export enum ModalType {
     NONE,
     ADD,
@@ -8,14 +9,18 @@ export enum ModalType {
     REMOVE,
     REMOVE_CONFIRM,
     ADD_OR_REMOVE,
+    ENABLE
 }
 
 interface ModalProps {
     loading : boolean;
     setLoading : (val : boolean) => void;
+    activePair : AllPairInfo | undefined,
+    setActivePair : (pair : AllPairInfo) => void
     status : TransactionState;
     setStatus : (status : TransactionState) => void;
     modalType : ModalType;
+    prevModalType : ModalType;
     setModalType : (modalType : ModalType) => void;
     confirmationValues : {
           amount1: number,
@@ -34,17 +39,29 @@ interface ModalProps {
 }
   
 
-  const useModals = create<ModalProps>()(devtools((set)=>({
+  const useModals = create<ModalProps>()(devtools((set, get)=>({
     loading : false,
     setLoading : (value)=> set({loading : value}),
     status : 'None',
     setStatus : (status) => set({
         status
     }),
-    modalType : ModalType.NONE,
-    setModalType : (modalType) => set({
-        modalType
+    activePair : undefined,
+    setActivePair : (pair) => set({
+      activePair : pair
     }),
+    modalType : ModalType.NONE,
+    prevModalType : ModalType.NONE,
+    setModalType : (modalType) => {
+      
+    if(modalType !== get().modalType){
+      set({
+        prevModalType : get().modalType,
+        modalType : modalType,
+    })
+    }
+   
+  },
     confirmationValues : {
         amount1 : 0,
         amount2 : 0,

@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
-
-const Container = styled.div`
+interface props {
+  value : number;
+}
+const Container = styled.div<props>`
 display : flex;
 flex-direction: column;
 gap: .5rem;
@@ -11,7 +13,7 @@ margin : 1px;
     border: 1px solid transparent;
 
     padding: 0.5rem;
-    color : white;
+    color : ${props => props.value <= 0 ? "#ff4646" : "white"};
 
     &:hover {
         border: 1px solid var(--primary-color);
@@ -19,20 +21,20 @@ margin : 1px;
     }
     &:focus {
         outline: 1px solid var(--primary-color);
-        color : var(--primary-color);
+        color : ${props => props.value <= 0 ? "#ff4646" : "var(--primary-color)"};
     }
   }
 
   label {
     font-style: normal;
     font-weight: 400;
-    color: white;
+    color : ${props => props.value <= 0 ? "#ff4646" : "white"};
     font-size: 18px;
     line-height: 21px;
     letter-spacing: -0.03em;
 
     &:focus {
-        color : var(--primary-color)
+      color : ${props => props.value <= 0 ? "#ff4646" : "var(--primary-color)"};
     }
   }
 `;
@@ -43,7 +45,7 @@ interface DexProps {
 }
 const Input = ({ name, value, onChange }: DexProps) => {
   return (
-    <Container>
+    <Container value={Number(value)}>
       <label htmlFor="item">{name}</label>
       <input autoComplete="off" spellCheck={false} type="text" name="item" id="item" placeholder="0.00" value={value}  onChange={(e) => {onChange(e.target.value)}}/>
     </Container>

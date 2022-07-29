@@ -121,17 +121,16 @@ const Button = styled.button`
     cursor: pointer;
   }
 `;
-const DisabledButton = styled.button`
-  font-weight: 300;
-  font-size: 18px;
+const DisabledButton = styled(Button)`
   background-color: black;
   color: #939393;
-  padding: 0.2rem 2rem;
   border: 1px solid #939393;
-  margin: 2rem auto;
-  margin-bottom: 0;
-  display: flex;
-  align-self: center;
+  
+  &:hover {
+    cursor: not-allowed;
+    background-color: black;
+    color: #939393;
+  }
 `;
 
 interface AddConfirmationProps {
@@ -251,7 +250,7 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
                 <RowCell type="share of pool : " value={calculateExpectedShareofLP(props.expectedLP, props.pair.userSupply.totalLP, props.pair.totalSupply.totalLP).toFixed(8) + "%"} />
             </div>
 
-            {currentBlockTimeStamp == 0 ? <DisabledButton>loading...</DisabledButton> : props.pair.basePairInfo.token1.address == TOKENS.WCANTO.address ?
+            {currentBlockTimeStamp == 0 ? <DisabledButton>loading</DisabledButton> : props.pair.basePairInfo.token1.address == TOKENS.WCANTO.address ?
 
 
                 <Button onClick={() => {

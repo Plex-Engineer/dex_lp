@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { noteSymbol } from "global/utils/utils";
 import IconPair from "../components/iconPair";
 import useModals, { ModalType } from "../hooks/useModals";
+import { useEffect } from "react";
 const Container = styled.div`
   background-color: #040404;
   height: 36rem;
@@ -11,7 +12,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  gap: .7rem;
+  gap: 0.7rem;
   .title {
     font-style: normal;
     font-weight: 300;
@@ -56,7 +57,6 @@ const Container = styled.div`
     letter-spacing: -0.02em;
     text-transform: lowercase;
     color: #606060;
-
   }
   .logo {
     /* padding: 1rem; */
@@ -73,7 +73,7 @@ const Container = styled.div`
   .fields {
     display: flex;
     margin-top: 2rem;
-    gap : .6rem
+    gap: 0.6rem;
   }
 
   .token {
@@ -83,9 +83,9 @@ const Container = styled.div`
     gap: 0.3rem;
     /* border: 2px solid #333; */
     background-color: #111;
-    color : white;
+    color: white;
     align-items: center;
-    gap: .8rem;
+    gap: 0.8rem;
     text-align: center;
     /* margin: .4rem; */
   }
@@ -101,7 +101,7 @@ const SecondaryButton = styled.button`
   display: flex;
   align-self: center;
   justify-content: center;
-  width : 10rem;
+  width: 10rem;
   &:hover {
     background-color: var(--primary-color-dark);
     color: black;
@@ -112,7 +112,7 @@ const SecondaryButton = styled.button`
 const PrimaryButton = styled(SecondaryButton)`
   background-color: var(--primary-color);
   color: black;
-`
+`;
 
 interface Props {
   value: AllPairInfo;
@@ -121,7 +121,9 @@ interface Props {
   account?: string;
 }
 const AddRemoveModal = ({ value, onClose, chainId, account }: Props) => {
- const setModalType = useModals(state => state.setModalType);
+  const setModalType = useModals((state) => state.setModalType);
+
+
 
   return (
     <Container>
@@ -131,7 +133,10 @@ const AddRemoveModal = ({ value, onClose, chainId, account }: Props) => {
           value.basePairInfo.token2.symbol}
       </div>
       <p id="position">position overview</p>
-      <IconPair iconLeft={value.basePairInfo.token1.icon} iconRight={value.basePairInfo.token2.icon}/>
+      <IconPair
+        iconLeft={value.basePairInfo.token1.icon}
+        iconRight={value.basePairInfo.token2.icon}
+      />
       <h1>
         {value.basePairInfo.token1.symbol +
           " & " +
@@ -142,31 +147,51 @@ const AddRemoveModal = ({ value, onClose, chainId, account }: Props) => {
       <div className="fields">
         <div className="token">
           <img src={value.basePairInfo.token1.icon} height={50} width={50} />
-          <p>{noteSymbol}{(Number(value.userSupply.token1) * Number(value.prices.token1)).toFixed(4)}</p>
+          <p>
+            {noteSymbol}
+            {(
+              Number(value.userSupply.token1) * Number(value.prices.token1)
+            ).toFixed(4)}
+          </p>
 
-          <p>{Number(value.userSupply.token1).toFixed(4)} {value.basePairInfo.token1.symbol}</p>
+          <p>
+            {Number(value.userSupply.token1).toFixed(4)}{" "}
+            {value.basePairInfo.token1.symbol}
+          </p>
         </div>
         <div className="token">
           <img src={value.basePairInfo.token2.icon} height={50} width={50} />
-          <p>{noteSymbol}{(Number(value.userSupply.token2) * Number(value.prices.token2)).toFixed(4)}</p>
+          <p>
+            {noteSymbol}
+            {(
+              Number(value.userSupply.token2) * Number(value.prices.token2)
+            ).toFixed(4)}
+          </p>
 
-          <p>{Number(value.userSupply.token2).toFixed(4)} {value.basePairInfo.token2.symbol}</p>
+          <p>
+            {Number(value.userSupply.token2).toFixed(4)}{" "}
+            {value.basePairInfo.token2.symbol}
+          </p>
         </div>
       </div>
       <div className="fields">
-        <SecondaryButton onClick={() => {
-          setModalType(ModalType.REMOVE);
+        <SecondaryButton
+          onClick={() => {
+            setModalType(ModalType.REMOVE);
+          }}
+        >
+          Remove
+        </SecondaryButton>
 
-        }}>Remove</SecondaryButton>
-
-        <PrimaryButton onClick={() => {
-          setModalType(ModalType.ADD);
-
-        }}>Add</PrimaryButton>
+        <PrimaryButton
+          onClick={() => {
+            setModalType(ModalType.ADD);
+          }}
+        >
+          Add
+        </PrimaryButton>
       </div>
     </Container>
-
-
   );
 };
 

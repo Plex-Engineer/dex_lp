@@ -66,7 +66,7 @@ const Button = styled.button`
   background-color: var(--primary-color);
   padding: 0.6rem;
   border: 1px solid var(--primary-color);
-  margin: 2rem;
+  margin: 2rem auto;
   /* margin: 3rem auto; */
 
   &:hover {
@@ -99,7 +99,7 @@ interface AddAllowanceProps {
 }
 
 const AddAllowanceButton = (props: AddAllowanceProps) => {
-  const [setModalType, setConfirmationValues] = useModals(state => [state.setModalType, state.setConfirmationValues]);
+  const [setModalType, setConfirmationValues, activePair] = useModals(state => [state.setModalType, state.setConfirmationValues, state.activePair]);
 
   const routerAddress = getRouterAddress(props.chainId);
   const needToken1Allowance = Number(props.value1) > Number(props.pair.allowance.token1);
@@ -119,6 +119,12 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
     name : props.pair.basePairInfo.token2.symbol
   });
 
+  useEffect(()=>{
+    if(Number(props.pair.allowance.token1) == 0 || Number(props.pair.allowance.token2) == 0)
+    {
+      setModalType(ModalType.ENABLE);
+    }
+  },[])
 
   useEffect(()=>{
     props.status1(addAllowanceA.status)
@@ -162,11 +168,18 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
     )
   } else {
     if (isNaN(Number(props.value1)) || isNaN(Number(props.value2))) {
-      return <DisabledButton>Enter valid amount</DisabledButton>
-    } else if (Number(props.value1) > Number(props.pair.balances.token1) || Number(props.value2) > Number(props.pair.balances.token2)) {
-      return <DisabledButton>No Funds</DisabledButton>
-    } else if (!(props.value1 && props.value2 && props.slippage && props.deadline)) {
-      return <DisabledButton>Enter amount</DisabledButton>
+      return <DisabledButton>Enter valid amount</DisabledButton>;
+    } else if (
+      Number(props.value1) > Number(props.pair.balances.token1) ||
+      Number(props.value2) > Number(props.pair.balances.token2)
+    ) {
+      return <DisabledButton>No Funds</DisabledButton>;
+    } else if (Number(props.slippage) <= 0 || Number(props.deadline) <= 0) {
+      return <DisabledButton>Invalid settings</DisabledButton>;
+    } else if (
+      !(props.value1 && props.value2)
+    ) {
+      return <DisabledButton>Enter amount</DisabledButton>;
     } else {
       return <Button onClick={() => {
 
@@ -331,6 +344,13 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
         <div className="field">
           <Input name="Transaction deadline (minutes)" value={deadline} onChange={(d) => setDeadline(d)} />
         </div>
+        {Number(slippage) <= 0 || Number(deadline) <= 0 ? (
+            <DisabledButton>Save settings</DisabledButton>
+          ) : (
+            <Button onClick={() => setOpenSettings(false)}>
+              Save settings
+            </Button>
+          )}
       </PopIn>
       </div>
       <AddAllowanceButton status1={setToken1AllowanceStatus} status2={setToken2AllowanceStatus} pair={value} value1={Number(value1)} value2={Number(value2)} chainId={chainId} deadline={Number(deadline)} slippage={Number(slippage)}/>

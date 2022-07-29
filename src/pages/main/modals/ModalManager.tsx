@@ -8,6 +8,7 @@ import RemoveModal from "./removeModal";
 import AddRemoveModal from "./addRemove";
 import { RemoveLiquidityConfirmation } from "./removeConfirmation";
 import { AddLiquidityConfirmation } from "./addConfirmation";
+import EnableModal from "./enableModal";
 
 const StyledPopup = styled(Popup)`
 // use your custom style for ".popup-overlay"
@@ -91,12 +92,20 @@ return (
         right: ".5rem",
         width: "40px",
         cursor: "pointer",
-        zIndex: "3",
+        zIndex: "6",
       }}
       alt="close"
       onClick={props.onClose}
     />
 
+    {modalType === ModalType.ENABLE && (
+      <EnableModal
+        onClose={props.onClose}
+        value={props.data}
+        chainId={props.chainId}
+        account={props.account}
+      />
+    )}
     {modalType === ModalType.ADD && (
       <AddModal
         onClose={props.onClose}
