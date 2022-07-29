@@ -1,13 +1,10 @@
 import styled from "@emotion/styled";
-import DexTable from "./components/table";
-import DexRow from "./components/row";
+import Table from "./components/table";
+import Row from "./components/row";
 import { useEffect, useState } from "react";
 import useDex from "pages/main/hooks/useTokens";
 import { AllPairInfo } from "pages/main/hooks/useTokens";
 import { noteSymbol } from "global/utils/utils";
-
-// import { DexModalManager, DexModalType } from "components/modals/dex/dexModalManager";
-// import { useDexModalType } from "providers/dexContext";
 import { toast } from "react-toastify";
 import { useNotifications, useEthers } from "@usedapp/core";
 import {
@@ -211,10 +208,10 @@ const Dex = () => {
           >
             current position
           </p>
-          <DexTable>
+          <Table>
             {pairs?.map((pair: AllPairInfo) => {
               return Number(pair.userSupply.totalLP) > 0 ? (
-                <DexRow
+                <Row
                   key={pair.basePairInfo.address}
                   iconLeft={pair.basePairInfo.token1.icon}
                   iconRight={pair.basePairInfo.token2.icon}
@@ -238,7 +235,7 @@ const Dex = () => {
                 />
               ) : null;
             })}
-          </DexTable>
+          </Table>
         </div>
       ) : null}
 
@@ -255,10 +252,10 @@ const Dex = () => {
           >
             pools
           </p>
-          <DexTable>
+          <Table>
             {pairs?.map((pair: AllPairInfo) => {
               return Number(pair.userSupply.totalLP) > 0 ? null : (
-                <DexRow
+                <Row
                   key={pair.basePairInfo.address}
                   iconLeft={pair.basePairInfo.token1.icon}
                   iconRight={pair.basePairInfo.token2.icon}
@@ -283,7 +280,7 @@ const Dex = () => {
                 />
               );
             })}
-          </DexTable>
+          </Table>
         </div>
       ) : null}
     </Container>
