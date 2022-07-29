@@ -1,7 +1,11 @@
 #root {
   width: 100%;
   --primary-color : #06fc99;
-
+  --primary-color : #06fc99;
+  --primary-color-dark : #05de87;
+  --off-white-color : #EFEFEF;
+  --error-color : #FE4256;
+  --toastify-color-progress-light: var(--primary-color) !important;
 }
 
 :root{

@@ -89,17 +89,18 @@ const DisabledButton = styled(Button)`
 
 interface AddAllowanceProps {
   pair: AllPairInfo,
-  value1: string,
-  value2: string,
-  slippage: string,
-  deadline: string,
+  value1: number,
+  value2: number,
+  slippage: number,
+  deadline: number,
   chainId: number | undefined,
   status1: (val : string)=>void,
   status2 : (val : string)=>void
 }
 
 const AddAllowanceButton = (props: AddAllowanceProps) => {
-  const setModalType = useModals(state => state.setModalType);
+  const [setModalType, setConfirmationValues] = useModals(state => [state.setModalType, state.setConfirmationValues]);
+
   const routerAddress = getRouterAddress(props.chainId);
   const needToken1Allowance = Number(props.value1) > Number(props.pair.allowance.token1);
   const needToken2Allowance = Number(props.value2) > Number(props.pair.allowance.token2);
@@ -168,12 +169,15 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
       return <DisabledButton>Enter amount</DisabledButton>
     } else {
       return <Button onClick={() => {
-        // setModalType([DexModalType.ADDCONFIRM, {
-        //   value1: props.value1,
-        //   value2: props.value2,
-        //   slippage: props.slippage,
-        //   deadline: props.deadline
-        // }])
+
+        setConfirmationValues({
+          amount1 : props.value1,
+          amount2 : props.value2,
+          slippage : props.slippage,
+          deadline : props.deadline,
+          percentage : 0
+        })
+        setModalType(ModalType.ADD_CONFIRM)
       }}
       >Add Liquidity</Button>
     }
@@ -329,7 +333,7 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
         </div>
       </PopIn>
       </div>
-      <AddAllowanceButton status1={setToken1AllowanceStatus} status2={setToken2AllowanceStatus} pair={value} value1={value1} value2={value2} chainId={chainId} deadline={deadline} slippage={slippage}/>
+      <AddAllowanceButton status1={setToken1AllowanceStatus} status2={setToken2AllowanceStatus} pair={value} value1={Number(value1)} value2={Number(value2)} chainId={chainId} deadline={Number(deadline)} slippage={Number(slippage)}/>
 
 
     </Container>
