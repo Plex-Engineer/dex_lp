@@ -28,7 +28,7 @@ export const Button = styled.button<ButtonProps>`
   }
 `;
 
-interface DexProps {
+interface RowProps {
   iconLeft: string;
   iconRight: string;
   assetName: string;
@@ -38,7 +38,7 @@ interface DexProps {
   share: string;
   onClick: () => void;
 }
-const Row = (props: DexProps) => {
+const Row = (props: RowProps) => {
   return (
     <tr
       onClick={() => {
@@ -69,5 +69,26 @@ const Row = (props: DexProps) => {
     </tr>
   );
 };
+
+interface TransactionProps {
+  name: string;
+  icon: string;
+  status: string;
+  onClick?: () => void;
+  date: Date;
+}
+
+export const TransactionRow = (props: TransactionProps) => {
+  return (
+    <tr onClick={props.onClick}>
+      <td>
+        <img src={props.icon} /> <span>{props.name}</span>
+      </td>
+      <td>{props.status}</td>
+      <td>{props.date.toDateString()}</td>
+    </tr>
+  );
+};
+
 
 export default Row;

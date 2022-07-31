@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import Table from "./components/table";
-import Row from "./components/row";
+import Row, { TransactionRow } from "./components/row";
 import { useEffect, useState } from "react";
 import useDex from "pages/main/hooks/useTokens";
 import { AllPairInfo } from "pages/main/hooks/useTokens";
 import { noteSymbol } from "global/utils/utils";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useNotifications, useEthers } from "@usedapp/core";
 import {
   addNetwork,
@@ -103,6 +103,7 @@ const Dex = () => {
       }
     });
 
+
     notifications.map((noti) => {
       if (
         //@ts-ignore
@@ -164,6 +165,7 @@ const Dex = () => {
     </div>
   ) : (
     <Container>
+
       <div style={{ marginBottom: "75px" }}>
         <ModalManager
           data={activePair}
@@ -177,13 +179,56 @@ const Dex = () => {
       <h4 style={{ textAlign: "center" }}>
         to swap tokens, visit{" "}
         <a
-          style={{ color: "white" }}
+          style={{ color: "#a2fca3" }}
           href="https://app.slingshot.finance/trade/"
         >
           Slingshot
         </a>
       </h4>
+      {notifs.filter(
+              (filterItem) => filterItem.type == "transactionStarted"
+            ).length > 0 ? (
+              <Table columns={["name","transaction","time"]}>
+                {notifs.map((item) => {
+                  if (
+                    //@ts-ignore
+                    item?.transactionName?.includes("type") &&
+                    item.type == "transactionStarted"
+                  ) {
+                    //@ts-ignore
+                    const msg: Details = JSON.parse(item?.transactionName);
 
+                    switch (msg.type) {
+                      case "add":
+                        msg.type = "adding";
+                        break;
+                      case "remove":
+                        msg.type = "removing";
+                        break;
+                      case "Enable":
+                        msg.type = "enabling";
+                        break;
+                    }
+                    return (
+                      <TransactionRow
+                        icon={msg.icon}
+                        name={msg.name.toLowerCase()}
+                        status={
+                          msg.type +
+                          " " +
+                          (Number(msg.amount) > 0
+                            ? Number(msg.amount).toFixed(2)
+                            : "") +
+                          " " +
+                          msg.name
+                        }
+                        date={new Date(item.submittedAt)}
+                      />
+                    );
+                  }
+                })}
+              </Table>
+            ) : null}
       {pairs?.filter((pair: AllPairInfo) => Number(pair.userSupply.totalLP) > 0)
         .length ?? 0 > 0 ? (
         <div>
@@ -196,7 +241,10 @@ const Dex = () => {
           >
             current position
           </p>
-          <Table>
+          <Table columns={["Asset",
+          "TVL",
+          "Position",
+          "% Share"]}>
             {pairs?.map((pair: AllPairInfo) => {
               return Number(pair.userSupply.totalLP) > 0 ? (
                 <Row
@@ -240,7 +288,10 @@ const Dex = () => {
           >
             pools
           </p>
-          <Table>
+          <Table columns={["Asset",
+          "TVL",
+          "Position",
+          "% Share"]}>
             {pairs?.map((pair: AllPairInfo) => {
               return Number(pair.userSupply.totalLP) > 0 ? null : (
                 <Row

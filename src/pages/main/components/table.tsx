@@ -48,6 +48,7 @@ const Table = styled.table`
 `;
 type Props = {
   children: React.ReactNode;
+  columns : string[];
 };
 
 const DexTable: React.FC<Props> = (props) => {
@@ -58,10 +59,7 @@ const DexTable: React.FC<Props> = (props) => {
       <Table>
       <thead>
         <tr>
-          <th>Asset</th>
-          <th>TVL</th>
-          <th>Position</th>
-          <th>% Share</th>
+          {props.columns.map((item)=><th>{item}</th>)}
         </tr>
       </thead>
       <tbody>{props.children}</tbody>
