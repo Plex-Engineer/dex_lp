@@ -17,7 +17,7 @@ export const CantoMain = {
   rpcUrl: "https://evm.plexnode.wtf",
   cosmosAPIEndpoint: "https://cosmos.plexnode.wtf/",
   isTestChain: false,
-  blockExplorerUrl: "https://www.nothing.com",
+  blockExplorerUrl: "https://evm.explorer.canto.io/",
 };
 
 export const CantoTest = {
