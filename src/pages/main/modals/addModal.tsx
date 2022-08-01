@@ -269,16 +269,34 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
     <Container>
           <DexLoadingOverlay isLoading={["Mining", "PendingSignature", "Success"].includes(token1AllowanceStatus)} >
         <LoadingModal
-          isLoading={false}
+        icons={
+          {
+            icon1 : value.basePairInfo.token1.icon,
+            icon2 : value.basePairInfo.token2.icon
+          }
+        }
+        name={
+          value.basePairInfo.token1.symbol + " / " + value.basePairInfo.token2.symbol
+        }
+        amount={"0"}
+        type="add"
           status={token1AllowanceStatus}
-          modalText={""}
         />
         </DexLoadingOverlay>
         <DexLoadingOverlay isLoading={["Mining", "PendingSignature", "Success"].includes(token2AllowanceStatus)} >
         <LoadingModal
-          isLoading={false}
+        icons={
+          {
+            icon1 : value.basePairInfo.token1.icon,
+            icon2 : value.basePairInfo.token2.icon
+          }
+        }
+        name={
+          value.basePairInfo.token1.symbol + "/ " + value.basePairInfo.token2.symbol
+        }
+        amount={"0"}
+        type="add"
           status={token2AllowanceStatus}
-          modalText={""}
         />
         </DexLoadingOverlay>
       <div className="title">{openSettings ? "Transaction Settings" : "Add Liquidity"}</div>

@@ -206,17 +206,35 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
         <Container>
             <DexLoadingOverlay isLoading={["Mining", "PendingSignature", "Success"].includes(addLiquidityState.status)} >
                 <LoadingModal
-                    isLoading={false}
+                 icons={
+                    {
+                      icon1 : props.pair.basePairInfo.token1.icon,
+                      icon2 : props.pair.basePairInfo.token2.icon
+                    }
+                  }
+                  name={
+                    props.pair.basePairInfo.token1.symbol + " / " + props.pair.basePairInfo.token2.symbol
+                  }
+                  amount={"0"}
+                  type="add"
                     status={addLiquidityState.status}
-                    modalText={""}
                 />
             </DexLoadingOverlay>
 
             <DexLoadingOverlay isLoading={["Mining", "PendingSignature", "Success"].includes(addLiquidityCANTOState.status)} >
                 <LoadingModal
-                    isLoading={false}
+                 icons={
+                    {
+                      icon1 : props.pair.basePairInfo.token1.icon,
+                      icon2 : props.pair.basePairInfo.token2.icon
+                    }
+                  }
+                  name={
+                    props.pair.basePairInfo.token1.symbol + "/ " + props.pair.basePairInfo.token2.symbol
+                  }
+                  amount={"0"}
+                  type="add"
                     status={addLiquidityCANTOState.status}
-                    modalText={""}
                 />
             </DexLoadingOverlay>
 

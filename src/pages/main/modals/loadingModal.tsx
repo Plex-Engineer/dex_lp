@@ -1,9 +1,17 @@
 import styled from "@emotion/styled";
 import loading from "assets/loading.svg";
+import IconPair from "../components/iconPair";
 interface ILoading {
-  isLoading: boolean;
   status: string | undefined;
-  modalText: string;
+  name: string;
+  icons:
+    | {
+        icon1: string;
+        icon2: string;
+      }
+    | string;
+  amount: string;
+  type: string;
 }
 
 const Progress = styled.div`
@@ -15,7 +23,7 @@ const Progress = styled.div`
   align-items: center;
 
   //keep rotating img
-  img {
+  .loading {
     animation: rotate 2s linear infinite;
   }
   @keyframes rotate {
@@ -63,26 +71,80 @@ const Button = styled.button`
     cursor: pointer;
   }
 `;
-const LoadingModal = ({ status, modalText }: ILoading) => {
+
+const LoadingModal = (props: ILoading) => {
   let currentStatus = "";
-  switch (status) {
+  switch (props.status) {
     case "PendingSignature":
-      currentStatus = "waiting for confirmation";
+      switch (props.type) {
+        case "enable":
+          currentStatus = "please sign to enable token/s";
+          break;
+        case "add":
+          currentStatus = "please sign to add liquidity";
+          break;
+        case "remove":
+          currentStatus = "please sign to remove liquidity";
+          break;
+          default :
+          currentStatus = "waiting for confirmation";
+      }
       break;
     case "Mining":
-      currentStatus = "validating";
+      switch (props.type) {
+        case "enable":
+          currentStatus = "enabling token/s";
+          break;
+        case "add":
+          currentStatus = "adding liquidity";
+          break;
+        case "remove":
+          currentStatus = "removing liquidity";
+          break;
+          default :
+          currentStatus = "validating";
+      }
       break;
     case "Success":
-      currentStatus = "successful";
+      switch (props.type) {
+        case "enable":
+          currentStatus = "successfully enabled";
+          break;
+        case "add":
+          currentStatus = "successfully added";
+          break;
+        case "remove":
+          currentStatus = "successfully removed";
+          break;
+          default :
+          currentStatus = "successful";
+      }
       break;
     case "Exception":
-      currentStatus = "Cancelled";
+      switch (props.type) {
+        case "enable":
+          currentStatus = "unable to enable";
+          break;
+        case "add":
+          currentStatus = "unable to add";
+          break;
+        case "remove":
+          currentStatus = "unable to remove";
+          break;
+          default :
+          currentStatus = "Cancelled";
+      }
       break;
   }
   return (
     <Progress>
-      <img src={loading} height={60} />
-      {/* <h3>{modalText}</h3> */}
+      {/* {typeof props.icons != "string" ? (
+        <IconPair iconLeft={props.icons.icon1} iconRight={props.icons.icon2} />
+      ) : (
+        <img src={props.icons} height={40} />
+      )} */}
+      <img src={loading} className="loading" height={60} />
+      <h3 style={{marginTop: "2rem"}}>{props.name}</h3>
       <p>{currentStatus}</p>
       {currentStatus == "mining" ? (
         <Button>view on etherscan</Button>

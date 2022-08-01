@@ -286,9 +286,18 @@ const EnableModal = ({ value, onClose, chainId, account }: Props) => {
         )}
       >
         <LoadingModal
-          isLoading={false}
+        icons={
+            {
+              icon1 : value.basePairInfo.token1.icon,
+              icon2 : value.basePairInfo.token2.icon
+            }
+          }
+          name={
+            value.basePairInfo.token1.symbol + " / " + value.basePairInfo.token2.symbol
+          }
+          amount={"0"}
+          type="enable"
           status={token1AllowanceStatus}
-          modalText={""}
         />
       </DexLoadingOverlay>
       <DexLoadingOverlay
@@ -297,9 +306,18 @@ const EnableModal = ({ value, onClose, chainId, account }: Props) => {
         )}
       >
         <LoadingModal
-          isLoading={false}
+        icons={
+            {
+              icon1 : value.basePairInfo.token1.icon,
+              icon2 : value.basePairInfo.token2.icon
+            }
+          }
+          name={
+            value.basePairInfo.token1.symbol + "/ " + value.basePairInfo.token2.symbol
+          }
+          amount={"0"}
+          type="enable"
           status={token2AllowanceStatus}
-          modalText={""}
         />
       </DexLoadingOverlay>
       <div className="title">{"Enable Token"}</div>

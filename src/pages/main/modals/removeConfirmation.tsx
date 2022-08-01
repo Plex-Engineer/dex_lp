@@ -198,16 +198,34 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
     return (<Container>
         <DexLoadingOverlay isLoading={["Mining", "PendingSignature", "Success"].includes(removeLiquidityState.status)} >
             <LoadingModal
-                isLoading={false}
+            icons={
+                {
+                  icon1 : props.pair.basePairInfo.token1.icon,
+                  icon2 : props.pair.basePairInfo.token2.icon
+                }
+              }
+              name={
+                props.pair.basePairInfo.token1.symbol + " / " + props.pair.basePairInfo.token2.symbol
+              }
+              amount={"0"}
+              type="remove"
                 status={removeLiquidityState.status}
-                modalText={""}
             />
         </DexLoadingOverlay>
         <DexLoadingOverlay isLoading={["Mining", "PendingSignature", "Success"].includes(removeLiquidityCANTOState.status)} >
             <LoadingModal
-                isLoading={false}
+              icons={
+                {
+                  icon1 : props.pair.basePairInfo.token1.icon,
+                  icon2 : props.pair.basePairInfo.token2.icon
+                }
+              }
+              name={
+                props.pair.basePairInfo.token1.symbol + "/ " + props.pair.basePairInfo.token2.symbol
+              }
+              amount={"0"}
+              type="remove"
                 status={removeLiquidityCANTOState.status}
-                modalText={""}
             />
         </DexLoadingOverlay>
         <div className="title">{props.pair.basePairInfo.token1.symbol + " / " + props.pair.basePairInfo.token2.symbol}</div>
