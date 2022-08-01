@@ -7,9 +7,6 @@ import { AllPairInfo } from "pages/main/hooks/useTokens";
 import { noteSymbol } from "global/utils/utils";
 import { toast } from "react-toastify";
 import { useNotifications } from "@usedapp/core";
-import {
-  checkNetworkVersion,
-} from "global/config/addCantoToWallet";
 import useModals, { ModalType } from "./hooks/useModals";
 import { ModalManager } from "./modals/ModalManager";
 import style from "./Dex.module.scss"

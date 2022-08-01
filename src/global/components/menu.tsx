@@ -28,6 +28,7 @@ const BurgerStyles = {
     marginLeft: "-47px",
   },
   bmMenu: {
+    
     background: "#000000",
     padding: "2.5em 1.5em 0",
     fontSize: "1.15em",
@@ -48,12 +49,13 @@ const BurgerStyles = {
     background: "rgba(0, 0, 0, 0.3)",
     width: "0px",
     height: "0px",
+    
   },
 };
 
 export const BurgerMenu = () => {
   return (
-    <Menu styles={BurgerStyles}>
+    <Menu  styles={BurgerStyles}>
       <h2>terminal</h2>
       <a id="bridge" className="menu-item" href="https://bridge-canto.netlify.app/">bridge</a>
       <a id="convertCoin" className="menu-item" href="/">convert coin</a>

@@ -10,12 +10,9 @@ const IconPair = (props : DualType) => {
         alignContent : "center",
         alignItems : "center"
       }}>
-        <img src={props.iconLeft} height={40}style={{
-          zIndex : "1"
-          
-        }}/>
+        <img src={props.iconLeft} height={40}/>
         <img src={props.iconRight} height={35} style={{
-          marginLeft: "-.7rem",
+          marginLeft: "-0.7rem",
           paddingRight : "1rem"
         }}/>
         </span>
