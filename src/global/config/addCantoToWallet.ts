@@ -1,4 +1,5 @@
-import { CantoTest, CantoMain } from "global/config/networks";
+import { CantoTestnet, CantoMainnet } from "global/config/networks";
+import { ethers } from "ethers";
 
 export function addNetwork() {
   //@ts-ignore
@@ -7,15 +8,15 @@ export function addNetwork() {
       method: "wallet_addEthereumChain",
       params: [
         {
-          chainId: "0x" + CantoMain.chainId.toString(16),
+          chainId: "0x" + CantoMainnet.chainId.toString(16),
           chainName: "Canto",
           nativeCurrency: {
             name: "Canto Coin",
             symbol: "CANTO",
             decimals: 18,
           },
-          rpcUrls: [CantoMain.rpcUrl],
-          blockExplorerUrls: [CantoMain.blockExplorerUrl],
+          rpcUrls: [CantoMainnet.rpcUrl],
+          blockExplorerUrls: [CantoMainnet.blockExplorerUrl],
         },
       ],
     })
@@ -24,18 +25,30 @@ export function addNetwork() {
     });
 }
 
-export function checkNetworkVersion(): boolean {
+export function getChainIdandAccount(): string[] | undefined[] {
   //@ts-ignore
   if (window.ethereum) {
     //@ts-ignore
-    const currentChain = window.ethereum.networkVersion;
-    if (
-      !(currentChain == CantoMain.chainId || currentChain == CantoTest.chainId)
-    ) {
-      return false;
-    } else {
-      return true;
+    return [window.ethereum.networkVersion, window.ethereum.selectedAddress];
+  }
+  return [undefined, undefined];
+}
+export async function connect() {
+    //@ts-ignore
+    if (window.ethereum) {
+      //@ts-ignore
+      window.ethereum.request({method: "eth_requestAccounts"});
+      addNetwork();
     }
   }
-  return false;
+
+export async function getAccountBalance(account: string | undefined) {
+    //@ts-ignore
+    if (window.ethereum) {
+        //@ts-ignore
+        let balance = await window.ethereum.request({method: 'eth_getBalance', params: [account, 'latest']})
+        return ethers.utils.formatEther(balance);
+    }
+    return "0";
+ 
 }

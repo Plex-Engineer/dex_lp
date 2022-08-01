@@ -1,11 +1,18 @@
 import styled from "@emotion/styled";
 import logo from "assets/logo.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import menu from "assets/menu.svg";
-import { useEthers, useEtherBalance } from "@usedapp/core";
-import { formatEther } from "@ethersproject/units";
 import { formatBigNumber } from "global/utils/utils";
-import { networkProperties } from "global/config/networks";
+import {
+  connect,
+  getAccountBalance,
+  getChainIdandAccount,
+} from "global/config/addCantoToWallet";
+
+import { useNetworkInfo } from "pages/main/hooks/networkInfo";
+import { BurgerMenu } from "global/components/menu";
+
+
 interface propsStyle {
   didScroll: boolean;
 }
@@ -17,9 +24,10 @@ const Container = styled.div<propsStyle>`
   & > * {
     flex: 1;
   }
-  border-bottom: ${props => (props.didScroll ? "1px solid var(--primary-color)" : "none")};
-  background-color: ${props => (props.didScroll ? "#09221454" : "none")};
-  backdrop-filter: ${props => (props.didScroll ? "blur(5px)" : "none")};
+  border-bottom: ${(props) =>
+    props.didScroll ? "1px solid var(--primary-color)" : "none"};
+  background-color: ${(props) => (props.didScroll ? "#09221454" : "none")};
+  backdrop-filter: ${(props) => (props.didScroll ? "blur(5px)" : "none")};
   z-index: 1;
   justify-content: space-between;
   align-items: center;
@@ -96,7 +104,7 @@ const Container = styled.div<propsStyle>`
     color: var(--primary-color);
     transition: all 0.2s ease-in-out;
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
       cursor: pointer;
       background-color: var(--primary-color);
       color: black;
@@ -198,14 +206,14 @@ const Glitch = styled.p`
     left: 0;
   }
 
-  & span:first-of-type {
+  & span:first-child {
     animation: glitch 500ms infinite;
     clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
     transform: translate(-0.04em, -0.03em);
     opacity: 0.75;
   }
 
-  & span:last-of-type {
+  & span:last-child {
     animation: glitch 375ms infinite;
     clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
     transform: translate(0.04em, 0.03em);
@@ -245,14 +253,38 @@ const Glitch = styled.p`
 `;
 
 const NavBar = () => {
-  const { account, activateBrowserWallet, chainId } = useEthers();
-  const chain: Number = chainId ?? 1;
-  const isConnected = account !== undefined;
+  const netWorkInfo = useNetworkInfo();
 
-  async function connect() {
-    // setIsModalOpen(true);
-    activateBrowserWallet();
+  useEffect(() => {
+    const [chainId, account] = getChainIdandAccount();
+    netWorkInfo.setChainId(chainId);
+    netWorkInfo.setAccount(account);
+  },[])
+  
+  //@ts-ignore
+  if (window.ethereum) {
+    //@ts-ignore
+    window.ethereum.on("accountsChanged", () => {
+      window.location.reload();
+    });
+ 
+    //@ts-ignore
+    window.ethereum.on("networkChanged", () => {
+      window.location.reload();
+    });
   }
+
+  async function getBalance() {
+    if (netWorkInfo.account != undefined) {
+      netWorkInfo.setBalance(await getAccountBalance(netWorkInfo.account))
+    }
+  }
+
+  useEffect(() => {
+    getBalance();
+  },[netWorkInfo.account])
+
+
 
   const [colorChange, setColorchange] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -265,11 +297,11 @@ const NavBar = () => {
   };
   window.addEventListener("scroll", changeNavbarColor);
 
-  const balance = useEtherBalance(account) ?? 0;
 
   return (
     <Container didScroll={colorChange}>
       <div id="logo">
+        <BurgerMenu/>
         <a
           href="https://canto.io"
           style={{
@@ -285,7 +317,7 @@ const NavBar = () => {
           </Glitch>
         </a>
       </div>
-      <h1>dex lp</h1>
+      <h1>lending</h1>
       <input
         type="checkbox"
         name="nav-menu"
@@ -295,27 +327,25 @@ const NavBar = () => {
           setIsNavOpen(!isNavOpen);
         }}
       />
-      {isConnected ? (
+      {netWorkInfo.isConnected && netWorkInfo.account ? (
         <button
           onClick={() => {
             // setIsModalOpen(true)
           }}
         >
-          {formatBigNumber(formatEther(balance))}&nbsp;
+          {formatBigNumber(netWorkInfo.balance)}&nbsp;
           <span
             style={{
               fontWeight: "600",
             }}
           >
-            {networkProperties.find((val) => val.chainId == chain)?.symbol ??
-              "ETH"}
+            CANTO
           </span>{" "}
-          | {account?.substring(0, 5) + ".."}
+          | {netWorkInfo.account?.substring(0, 5) + ".."}
         </button>
       ) : (
         <button onClick={() => connect()}>connect wallet</button>
       )}
-
       <label htmlFor="menu-checkbox" style={{ display: "none" }}>
         <img id="nav-menu" src={menu} />
       </label>

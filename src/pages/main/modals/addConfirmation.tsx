@@ -10,7 +10,7 @@ import { DexLoadingOverlay } from "./addModal";
 import LoadingModal from "./loadingModal";
 import { useEffect, useState } from "react";
 import { truncateNumber } from "pages/main/utils";
-import { CantoTest, CantoMain } from "global/config/networks";
+import { CantoTestnet, CantoMainnet } from "global/config/networks";
 import { TOKENS as ALLTOKENS } from "global/config/tokens";
 import ADDRESSES from "global/config/addresses";
 import useModals, { ModalType } from "../hooks/useModals";
@@ -165,7 +165,7 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
     });
     // const [addLiquidityStatus, setAddLiquidity1Status] = useState("None");
     // const [addLiquidityCantoStatus, setAddLiquidityCantp2Status] = useState("None");
-    const TOKENS = props.chainId == CantoTest.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet;
+    const TOKENS = props.chainId == CantoTestnet.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet;
     const setModalType = useModals(state => state.setModalType);
     
     const amountOut1 = truncateNumber(Number(props.value1),props.pair.basePairInfo.token1.decimals).toString();
@@ -175,7 +175,7 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
     const amountMinOut2 = truncateNumber((((Number(props.value2)) * (100 - Number(props.slippage))) / 100),props.pair.basePairInfo.token2.decimals).toString();
 
     //getting current block timestamp to add to the deadline that the user inputs
-    const provider = new ethers.providers.JsonRpcProvider(CantoTest.chainId == props.chainId ? CantoTest.rpcUrl : CantoMain.rpcUrl);
+    const provider = new ethers.providers.JsonRpcProvider(CantoTestnet.chainId == props.chainId ? CantoTestnet.rpcUrl : CantoMainnet.rpcUrl);
     const [currentBlockTimeStamp, setCurrentBlockTimeStamp] = useState(0);
     
    async function blockTimeStamp() {
@@ -304,9 +304,9 @@ export const AddLiquidityConfirmation = (props: Props) => {
 
 
     async function getExpectedLP() {
-        const providerURL = CantoTest.chainId == props.chainId ? CantoTest.rpcUrl : CantoMain.rpcUrl;
+        const providerURL = CantoTestnet.chainId == props.chainId ? CantoTestnet.rpcUrl : CantoMainnet.rpcUrl;
         const provider = new ethers.providers.JsonRpcProvider(providerURL);
-        const routerAddress = CantoTest.chainId == props.chainId ? ADDRESSES.testnet.PriceFeed : ADDRESSES.cantoMainnet.PriceFeed;
+        const routerAddress = CantoTestnet.chainId == props.chainId ? ADDRESSES.testnet.PriceFeed : ADDRESSES.cantoMainnet.PriceFeed;
         const RouterContract = new Contract(routerAddress, routerAbi, provider);
 
         const LPOut = await RouterContract.quoteAddLiquidity(
