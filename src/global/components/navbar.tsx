@@ -28,7 +28,13 @@ const Container = styled.div<propsStyle>`
     color: var(--primary-color);
     font-weight: 400;
     text-align: center;
-    flex-grow: 2;
+    flex-grow: 1.2;
+  }
+
+  .wallet {
+    display: flex;
+    align-items: flex-end;
+    justify-content: end ;
   }
   #logo {
     color: var(--primary-color);
@@ -92,6 +98,7 @@ const Container = styled.div<propsStyle>`
     font-family: "IBM Plex Mono";
     font-weight: 400;
     padding: 0.3rem 0.6rem;
+    /* flex: .6; */
     /* margin-right: 2rem; */
     color: var(--primary-color);
     transition: all 0.2s ease-in-out;
@@ -173,7 +180,6 @@ const Container = styled.div<propsStyle>`
       background-color: var(--primary-color);
       color: black;
       font-size: 1rem;
-      /* width: 160px; */
     }
   }
 `;
@@ -295,6 +301,7 @@ const NavBar = () => {
           setIsNavOpen(!isNavOpen);
         }}
       />
+      <div className="wallet">
       {isConnected ? (
         <button
           onClick={() => {
@@ -315,6 +322,7 @@ const NavBar = () => {
       ) : (
         <button onClick={() => connect()}>connect wallet</button>
       )}
+      </div>
 
       <label htmlFor="menu-checkbox" style={{ display: "none" }}>
         <img id="nav-menu" src={menu} />
