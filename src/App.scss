@@ -1,8 +1,11 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  --primary-color : #06fc99;
+  --primary-color : #06fc99;
+  --primary-color-dark : #05de87;
+  --off-white-color : #EFEFEF;
+  --error-color : #FE4256;
+  --toastify-color-progress-light: var(--primary-color) !important;
 }
 
 :root{
@@ -27,18 +30,19 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 ::-webkit-scrollbar {
-  width: 6px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: #151515;
+
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   box-shadow: inset 2 2 5px var(--primary-color);
   border-radius: 6px;
+  width: 6px;
   background: var(--primary-color);
 }
 
@@ -47,16 +51,9 @@ input[type=number] {
   background: #07e48c;
 }
 .App {
-    background: rgb(0,0,0);
     background: repeating-linear-gradient(0deg, #010000 0%, #010000 4px, #021911 4px, #021911  8px);
     background-repeat: repeat-y;
-}
-
-
-.ReactModal__Content{
-  background-color: red;
-}
-
-.web3modal-modal-card{
-  border-radius: 0px !important;
+    text-shadow: 0 0 4px #2cffab, 0 0 20px var(--primary-color);
+    display: flex;
+    flex-direction: column;
 }

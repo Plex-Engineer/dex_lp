@@ -1,12 +1,20 @@
-import { useState } from 'react'
-import './App.css'
-
+import Dex from 'pages/main/Dex'
+import './App.scss'
+import { Overlay, ScanLine, ScanlinesOverlay, StaticNoiseOverlay } from 'global/styled-components/Overlays'
+import NavBar from 'global/components/navbar'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-        
+      <ToastContainer/>
+      <StaticNoiseOverlay/>
+      <ScanlinesOverlay />
+      <ScanLine/>
+      <Overlay/>
+      <NavBar/>
+      <Dex/>
     </div>
   )
 }
