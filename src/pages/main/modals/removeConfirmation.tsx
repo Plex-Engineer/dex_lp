@@ -7,9 +7,9 @@ import { DexLoadingOverlay } from "./addModal";
 import { RowCell } from "./removeModal";
 import { ModalType } from "../hooks/useModals";
 import { useEffect } from "react";
-import { truncateNumber } from "pages/main/utils";
+import { truncateByZeros, truncateNumber } from "pages/main/utils";
 import { useState } from "react";
-import { CantoTest, CantoMain } from "global/config/networks";
+import { CantoTestnet, CantoMainnet } from "global/config/networks";
 import { TOKENS as ALLTOKENS } from "global/config/tokens";
 import useModals from "../hooks/useModals";
 
@@ -92,7 +92,7 @@ const Container = styled.div`
 
   .rowCell {
     p:first-child {
-      text-transform: lowercase;
+      /* text-transform: lowercase; */
       color: #888;
     }
     p:last-child {
@@ -167,14 +167,14 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
     });
     const setModalType = useModals(state => state.setModalType);
 
-    const TOKENS = props.chainId == CantoTest.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet;
+    const TOKENS = props.chainId == CantoTestnet.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet;
 
     const LPOut = props.percentage == 100 ? props.pair.userSupply.totalLP : truncateNumber(((Number((props.pair.userSupply.totalLP)) * Number(props.percentage)) / 100), props.pair.basePairInfo.decimals).toString();
     const amountMinOut1 = truncateNumber((((Number(props.value1)) * (100 - Number(props.slippage))) / 100), props.pair.basePairInfo.token1.decimals).toString();
     const amountMinOut2 = truncateNumber((((Number(props.value2)) * (100 - Number(props.slippage))) / 100), props.pair.basePairInfo.token2.decimals).toString();
 
     //getting current block timestamp to add to the deadline that the user inputs
-    const provider = new ethers.providers.JsonRpcProvider(CantoTest.chainId == props.chainId ? CantoTest.rpcUrl : CantoMain.rpcUrl);
+    const provider = new ethers.providers.JsonRpcProvider(CantoTestnet.chainId == props.chainId ? CantoTestnet.rpcUrl : CantoMainnet.rpcUrl);
     const [currentBlockTimeStamp, setCurrentBlockTimeStamp] = useState(0);
     
     async function blockTimeStamp() {
@@ -266,9 +266,9 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
             flexDirection: "column",
             gap: "1rem"
         }}>
-            <RowCell type={props.pair.basePairInfo.token1.symbol + " withdrawing : "} value={Number(props.value1).toFixed(4)} />
-            <RowCell type={props.pair.basePairInfo.token2.symbol + " withdrawing : "} value={Number(props.value2).toFixed(4)} />
-            <RowCell type={"burned: "} value={LPOut} />
+            <RowCell type={props.pair.basePairInfo.token1.symbol + " withdrawing: "} value={truncateByZeros(props.value1.toString()).toString()} />
+            <RowCell type={props.pair.basePairInfo.token2.symbol + " withdrawing: "} value={truncateByZeros(props.value2.toString()).toString()} />
+            <RowCell type={"burned: "} value={truncateByZeros(LPOut.toString()).toString()} />
             {/* <RowCell type="share of pool : " value={calculateExpectedShareofLP(props.expectedLP, props.pair.userSupply.totalLP, props.pair.totalSupply.totalLP).toFixed(8) + "%"} /> */}
         </div>
         {(currentBlockTimeStamp == 0 ? <DisabledButton>loading...</DisabledButton> : props.pair.basePairInfo.token1.address == TOKENS.WCANTO.address ?

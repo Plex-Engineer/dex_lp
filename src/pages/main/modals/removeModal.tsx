@@ -13,6 +13,7 @@ import { DexLoadingOverlay, PopIn } from "./addModal";
 import SettingsIcon from "assets/settings.svg";
 import IconPair from "../components/iconPair";
 import useModals, { ModalType } from "../hooks/useModals";
+import { truncateByZeros } from "../utils";
 
 const Container = styled.div`
   background-color: #040404;
@@ -203,7 +204,7 @@ const ConfirmButton = (props: ConfirmButtonProps) => {
   ) {
     return <DisabledButton>enter percentage</DisabledButton>;
   } else if (Number(props.slippage) <= 0 || Number(props.deadline) <= 1) {
-    return <DisabledButton>Invalid settings</DisabledButton>;
+    return <DisabledButton>invalid settings</DisabledButton>;
   } else {
     return (
       <Button
@@ -316,7 +317,7 @@ const RemoveModal = ({ value, onClose, chainId, account }: Props) => {
         style={{ width: "100%", padding: "0 2rem", marginTop: "1rem" }}
       >
         <Input
-          name="Percent to remove"
+          name="percent to remove"
           value={percentage}
           onChange={(percentage) => {
             setPercentage(percentage);
@@ -340,15 +341,15 @@ const RemoveModal = ({ value, onClose, chainId, account }: Props) => {
             marginBottom: "1rem",
           }}
         >
-          You'll receive
+          you'll receive
         </p>
         <RowCell
-          type={value1.toFixed(4) + " " + value.basePairInfo.token1.symbol}
-          value={noteSymbol + (value1 * Number(value.prices.token1)).toFixed(5)}
+          type={truncateByZeros(value1.toString()) + " " + value.basePairInfo.token1.symbol}
+          value={noteSymbol + truncateByZeros((value1 * Number(value.prices.token1)).toString())}
         />
         <RowCell
-          type={value2.toFixed(4) + " " + value.basePairInfo.token2.symbol}
-          value={noteSymbol + (value2 * Number(value.prices.token2)).toFixed(5)}
+          type={truncateByZeros(value2.toString()) + " " + value.basePairInfo.token2.symbol}
+          value={noteSymbol + truncateByZeros((value2 * Number(value.prices.token2)).toString())}
         />
       </div>
       <ConfirmButton
@@ -375,23 +376,23 @@ const RemoveModal = ({ value, onClose, chainId, account }: Props) => {
         >
           <div className="field">
             <Input
-              name="Slippage tolerance %"
+              name="slippage tolerance %"
               value={slippage}
               onChange={(s) => setSlippage(s)}
             />
           </div>
           <div className="field">
             <Input
-              name="Transaction deadline (minutes)"
+              name="transaction deadline (minutes)"
               value={deadline}
               onChange={(d) => setDeadline(d)}
             />
           </div>
           {Number(slippage) <= 0 || Number(deadline) <= 0 ? (
-            <DisabledButton>Save settings</DisabledButton>
+            <DisabledButton>save settings</DisabledButton>
           ) : (
             <Button onClick={() => setOpenSettings(false)}>
-              Save settings
+              save settings
             </Button>
           )}
         </PopIn>

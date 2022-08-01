@@ -6,13 +6,15 @@ import useDex from "pages/main/hooks/useTokens";
 import { AllPairInfo } from "pages/main/hooks/useTokens";
 import { noteSymbol } from "global/utils/utils";
 import { toast } from "react-toastify";
-import { useNotifications, useEthers } from "@usedapp/core";
+import { useNotifications } from "@usedapp/core";
 import {
   checkNetworkVersion,
 } from "global/config/addCantoToWallet";
 import useModals, { ModalType } from "./hooks/useModals";
 import { ModalManager } from "./modals/ModalManager";
 import style from "./Dex.module.scss"
+import  {addNetwork} from "global/config/addCantoToWallet";
+import { useNetworkInfo } from "./hooks/networkInfo";
 
 const Container = styled.div`
   display: flex;
@@ -59,29 +61,28 @@ const Container = styled.div`
 
 const Dex = () => {
   // Mixpanel.events.pageOpened("Dex Market", '');
-  const { account, chainId } = useEthers();
+
+  //get network info from store
+  const networkInfo = useNetworkInfo();
+
   const { notifications } = useNotifications();
   const [notifs, setNotifs] = useState<any[]>([]);
 
   const [setModalType, activePair, setActivePair] = useModals((state) => [state.setModalType, state.activePair, state.setActivePair]);
-  const pairs = useDex(account, chainId);
+
+  const pairs = useDex(networkInfo.account, Number(networkInfo.chainId));
 
  
 
-  //Let the user know they are on the wrong network
-  const [isOnMain, setIsOnMain] = useState(true);
+  //Let the user know if they are on the wrong network
   useEffect(() => {
-    // addNetwork();
-    setTimeout(() => {
-      const onCantoNetwork = checkNetworkVersion();
-      if (!onCantoNetwork) {
+    addNetwork();
+      if (!networkInfo.isConnected) {
         toast.error("please switch networks", {
           toastId: 1,
         });
       }
-      setIsOnMain(onCantoNetwork);
-    }, 2000);
-  }, [chainId]);
+  }, [networkInfo.chainId]);
 
   useEffect(() => {
     notifications.forEach((item) => {
@@ -159,7 +160,7 @@ const Dex = () => {
     });
   }, [notifications]);
 
-  return !isOnMain ? (
+  return !networkInfo.isConnected ? (
     <div style={{ color: "red", textAlign: "center" }}>
       <h1>please switch to canto mainnet</h1>
     </div>
@@ -169,17 +170,17 @@ const Dex = () => {
       <div style={{ marginBottom: "75px" }}>
         <ModalManager
           data={activePair}
-          chainId={chainId}
-          account={account}
+          chainId={Number(networkInfo.chainId)}
+          account={networkInfo.account}
           onClose={() => {
             setModalType(ModalType.NONE);
           }}
         />
       </div>
-      <h4 style={{ textAlign: "center" }}>
+      <h4 style={{ textAlign: "center"}}>
         to swap tokens, visit{" "}
         <a
-          style={{ color: "#a2fca3" }}
+          style={{ color: "#a2fca3", textDecoration: "underline"}}
           href="https://app.slingshot.finance/trade/"
         >
           Slingshot

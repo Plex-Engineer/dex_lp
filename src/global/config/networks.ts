@@ -7,28 +7,55 @@ export const getAddressLink = (explorerUrl: string) => (address: string) => `${e
 
 export const getTransactionLink = (explorerUrl: string) => (txnId: string) => `${explorerUrl}/tx/${txnId}`
 
-export const CantoTest: Chain = {
-  chainId: 771,
-  chainName: 'Canto Test',
-  rpcUrl : "http://165.227.98.94:1317",
-  isTestChain: true,
-  isLocalChain: false,
-  multicallAddress: '0xaEc0D885BBFa4B339eFCd490c50053738A872fd0',
-  multicall2Address: '0xF4583A82384330fBFd0ABbF98189425c8471059e',
+export const CantoMain = {
+  name: "Canto Mainnet",
+  symbol: "CANTO",
+  chainId: 7700,
+  addresses: addresses.cantoMainnet,
+  tokens: TOKENS.cantoMainnet,
+  pairs : MAINPAIRS,
+  rpcUrl: "https://evm.plexnode.wtf",
+  cosmosAPIEndpoint: "https://cosmos.plexnode.wtf/",
+  isTestChain: false,
   blockExplorerUrl: "https://www.nothing.com",
+};
+
+export const CantoTest = {
+  name: "Canto Testnet",
+  symbol: "CANTO",
+  chainId: 740,
+  addresses: addresses.testnet,
+  tokens: TOKENS.cantoTestnet,
+  pairs: TESTPAIRS,
+  rpcUrl: "https://eth.plexnode.wtf",
+  cosmosAPIEndpoint: "https://chain.plexnode.wtf/",
+  isTestChain: true,
+  blockExplorerUrl: "https://www.nothing.com",
+};
+
+
+export const CantoTestnet: Chain = {
+  chainId: CantoTest.chainId,
+  chainName: CantoTest.name,
+  rpcUrl : CantoTest.rpcUrl,
+  isTestChain: CantoTest.isTestChain,
+  isLocalChain: false,
+  multicallAddress: '0x121817438FC9b31ed4D6C4ED22eCde15af261f75',
+  multicall2Address: '0xd546F2aaB14eA4d4Dc083795b3e94D0C471A272f',
+  blockExplorerUrl: CantoTest.blockExplorerUrl,
   getExplorerAddressLink: getAddressLink("kovanEtherscanUrl"),
   getExplorerTransactionLink: getTransactionLink("kovanEtherscanUrl"),
 }
 
-export const CantoMain: Chain = {
-  chainId: 740,
-  chainName: 'Canto Main',
-  rpcUrl : "https://eth.plexnode.wtf",
-  isTestChain: true,
+export const CantoMainnet: Chain = {
+  chainId: CantoMain.chainId,
+  chainName: CantoMain.name,
+  rpcUrl : CantoMain.rpcUrl,
+  isTestChain: CantoMain.isTestChain,
   isLocalChain: false,
-  multicallAddress: '0x121817438FC9b31ed4D6C4ED22eCde15af261f75',
-  multicall2Address: '0xd546F2aaB14eA4d4Dc083795b3e94D0C471A272f',
-  blockExplorerUrl: "https://www.nothing.com",
+  multicallAddress: '0x210b88d5Ad4BEbc8FAC4383cC7F84Cd4F03d18c6',
+  multicall2Address: '0x637490E68AA50Ea810688a52D7464E10c25A77c1',
+  blockExplorerUrl: CantoMain.blockExplorerUrl,
   getExplorerAddressLink: getAddressLink("kovanEtherscanUrl"),
   getExplorerTransactionLink: getTransactionLink("kovanEtherscanUrl"),
 }
@@ -36,32 +63,11 @@ export const CantoMain: Chain = {
 
 
 export const config: Config = {
-  networks : [CantoTest, CantoMain],
+  networks : [CantoTestnet, CantoMainnet],
   readOnlyUrls: {
-    [CantoTest.chainId]: "https://canto.evm.chandrastation.com/",
-    [CantoMain.chainId] : "https://eth.plexnode.wtf"
+    [CantoTestnet.chainId]: CantoTest.rpcUrl,
+    [CantoMainnet.chainId] : CantoMain.rpcUrl
   },
   noMetamaskDeactivate : true,
 };
 
-
-export const networkProperties = [
-  {
-    name: "Canto Testnet",
-    symbol: "CANTO",
-    chainId : CantoTest.chainId,
-    pairs : TESTPAIRS,
-    tokens: TOKENS.cantoTestnet,
-    addresses: addresses.testnet,
-    chainInfo: CantoTest
-  },
-  {
-    name: "Canto Mainnet",
-    symbol: "CANTO",
-    chainId: CantoMain.chainId,
-    pairs: MAINPAIRS,
-    tokens: TOKENS.cantoMainnet,
-    addresses: addresses.cantoMainnet,
-    chainInfo: CantoMain
-  }
-]

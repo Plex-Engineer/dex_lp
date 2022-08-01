@@ -3,7 +3,7 @@ import { ERC20Abi, routerAbi } from "pages/main/config/abi";
 import { Contract} from "ethers";
 import { formatUnits, formatEther } from "ethers/lib/utils";
 import { PAIR, TESTPAIRS, MAINPAIRS } from "global/config/pairs";
-import { CantoTest, CantoMain} from "global/config/networks"
+import { CantoTestnet, CantoMainnet} from "global/config/networks"
 import ADDRESSES from "global/config/addresses";
 import {TOKENS as ALLTOKENS} from "global/config/tokens";
 
@@ -41,11 +41,11 @@ export interface AllPairInfo {
   };
 }
 const useTokens = (account: string | undefined, chainId: number | undefined) => {
-  const routerAddress = chainId == CantoTest.chainId ? ADDRESSES.testnet.PriceFeed : ADDRESSES.cantoMainnet.PriceFeed
+  const routerAddress = chainId == CantoTestnet.chainId ? ADDRESSES.testnet.PriceFeed : ADDRESSES.cantoMainnet.PriceFeed
   const RouterContract = new Contract(routerAddress, routerAbi);
 
-  const PAIRS: PAIR[] = chainId == CantoTest.chainId ?  TESTPAIRS : MAINPAIRS
-  const TOKENS = chainId == CantoTest.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet
+  const PAIRS: PAIR[] = chainId == CantoTestnet.chainId ?  TESTPAIRS : MAINPAIRS
+  const TOKENS = chainId == CantoTestnet.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet
  
   const CANTOBalance = formatEther(useEtherBalance(account)??0);
 

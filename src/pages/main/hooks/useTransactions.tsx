@@ -1,7 +1,7 @@
 import { utils, Contract } from "ethers";
 import { routerAbi, ERC20Abi } from "pages/main/config/abi";
 import { useContractFunction } from "@usedapp/core";
-import { CantoTest, CantoMain } from "global/config/networks";
+import { CantoTestnet, CantoMainnet } from "global/config/networks";
 import ADDRESSES from "global/config/addresses";
 
 interface Details {
@@ -17,7 +17,7 @@ interface Details {
 
 
 export function getRouterAddress(chainId:number | undefined) {
-    const routerAddress = CantoTest.chainId == chainId ? ADDRESSES.testnet.PriceFeed : ADDRESSES.cantoMainnet.PriceFeed;
+    const routerAddress = CantoTestnet.chainId == chainId ? ADDRESSES.testnet.PriceFeed : ADDRESSES.cantoMainnet.PriceFeed;
     return routerAddress
 }
 

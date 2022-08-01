@@ -147,7 +147,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
       <Button onClick={() => {
         addAllowanceASend(routerAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         addAllowanceBSend(routerAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
-      }}>Enable {props.pair.basePairInfo.token1.symbol} / {props.pair.basePairInfo.token2.symbol}
+      }}>{"enable" + props.pair.basePairInfo.token1.symbol + " & " + props.pair.basePairInfo.token2.symbol}
       </Button>
     )
   } else if (needToken1Allowance && !needToken2Allowance) {
@@ -155,7 +155,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
       <Button onClick={() => {
         addAllowanceASend(routerAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
       }}>
-        Enable {props.pair.basePairInfo.token1.symbol}
+        enable {props.pair.basePairInfo.token1.symbol}
       </Button>
     )
   } else if (!needToken1Allowance && needToken2Allowance) {
@@ -163,23 +163,23 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
       <Button onClick={() => {
         addAllowanceBSend(routerAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
       }}>
-        Enable For {props.pair.basePairInfo.token2.symbol}
+        enable For {props.pair.basePairInfo.token2.symbol}
       </Button>
     )
   } else {
     if (isNaN(Number(props.value1)) || isNaN(Number(props.value2))) {
-      return <DisabledButton>Enter valid amount</DisabledButton>;
+      return <DisabledButton>enter valid amount</DisabledButton>;
     } else if (
       Number(props.value1) > Number(props.pair.balances.token1) ||
       Number(props.value2) > Number(props.pair.balances.token2)
     ) {
-      return <DisabledButton>No Funds</DisabledButton>;
+      return <DisabledButton>no funds</DisabledButton>;
     } else if (Number(props.slippage) <= 0 || Number(props.deadline) <= 0) {
-      return <DisabledButton>Invalid settings</DisabledButton>;
+      return <DisabledButton>invalid settings</DisabledButton>;
     } else if (
       !(props.value1 && props.value2)
     ) {
-      return <DisabledButton>Enter amount</DisabledButton>;
+      return <DisabledButton>enter amount</DisabledButton>;
     } else {
       return <Button onClick={() => {
 
@@ -192,7 +192,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
         })
         setModalType(ModalType.ADD_CONFIRM)
       }}
-      >Add Liquidity</Button>
+      >add liquidity</Button>
     }
   }
 }
@@ -348,7 +348,7 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
         </div>
       </div>
       <div style={{ color: "white" }}>
-         1 {value.basePairInfo.token1.symbol} = {(1 / value.totalSupply.ratio).toFixed(3)} {value.basePairInfo.token2.symbol}
+         {"1 " + value.basePairInfo.token1.symbol + " = " + (1 / value.totalSupply.ratio).toFixed(3) + " " + value.basePairInfo.token2.symbol}
       </div>
       <div className="fields" style={{
         flexDirection: "column",
@@ -357,16 +357,16 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
       }}>
         <PopIn show={openSettings} style={!openSettings ? { zIndex: "-1" } : {marginBottom: "-15px"}}>
         <div className="field">
-          <Input name="Slippage tolerance %" value={slippage} onChange={(s) => setSlippage(s)} />
+          <Input name="slippage tolerance %" value={slippage} onChange={(s) => setSlippage(s)} />
         </div>
         <div className="field">
-          <Input name="Transaction deadline (minutes)" value={deadline} onChange={(d) => setDeadline(d)} />
+          <Input name="transaction deadline (minutes)" value={deadline} onChange={(d) => setDeadline(d)} />
         </div>
         {Number(slippage) <= 0 || Number(deadline) <= 0 ? (
-            <DisabledButton>Save settings</DisabledButton>
+            <DisabledButton>save settings</DisabledButton>
           ) : (
             <Button onClick={() => setOpenSettings(false)}>
-              Save settings
+              save settings
             </Button>
           )}
       </PopIn>
