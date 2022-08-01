@@ -57,10 +57,10 @@ export const BurgerMenu = () => {
       <h2>terminal</h2>
       <a id="bridge" className="menu-item" href="https://bridge-canto.netlify.app/">bridge</a>
       <a id="convertCoin" className="menu-item" href="/">convert coin</a>
-      <a id="dex" className="menu-item" href="/">dex</a>
       <a id="generator" className="menu-item" href="https://generator-canto.netlify.app/">generator</a>
       <a id="governance" className="menu-item" href="https://governance-canto.netlify.app/">governance</a>
       <a id="lending" className="menu-item" href="/">lending</a>
+      <a id="lpInterface" className="menu-item" href="/">lp interface</a>
       <a id="staking" className="menu-item" href="https://staking-canto.netlify.app/">staking</a>
     </Menu>
   );
