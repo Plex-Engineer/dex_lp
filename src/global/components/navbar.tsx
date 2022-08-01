@@ -11,6 +11,7 @@ import {
 
 import { useNetworkInfo } from "pages/main/hooks/networkInfo";
 import { BurgerMenu } from "global/components/menu";
+import { useEthers } from "@usedapp/core";
 
 
 interface propsStyle {
@@ -266,6 +267,7 @@ const NavBar = () => {
     netWorkInfo.setChainId(chainId);
     netWorkInfo.setAccount(account);
   },[])
+  const {activateBrowserWallet} = useEthers()
   
   //@ts-ignore
   if (window.ethereum) {
@@ -351,7 +353,7 @@ const NavBar = () => {
           | {netWorkInfo.account?.substring(0, 5) + ".."}
         </button>
       ) : (
-        <button onClick={() => connect()}>connect wallet</button>
+        <button onClick={() => activateBrowserWallet()}>connect wallet</button>
       )}
       </div>
      
