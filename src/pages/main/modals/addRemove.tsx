@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import { noteSymbol } from "global/utils/utils";
 import IconPair from "../components/iconPair";
 import useModals, { ModalType } from "../hooks/useModals";
-import { useEffect } from "react";
 const Container = styled.div`
   background-color: #040404;
   height: 36rem;
@@ -20,7 +19,6 @@ const Container = styled.div`
     line-height: 130%;
     text-align: center;
     letter-spacing: -0.1em;
-    text-transform: lowercase;
     color: var(--primary-color);
     /* margin-top: 0.3rem; */
     width: 100%;
@@ -129,7 +127,7 @@ const AddRemoveModal = ({ value, onClose, chainId, account }: Props) => {
     <Container>
       <div className="title">
         {value.basePairInfo.token1.symbol +
-          " " +
+          " / " +
           value.basePairInfo.token2.symbol}
       </div>
       <p id="position">position overview</p>
@@ -180,7 +178,7 @@ const AddRemoveModal = ({ value, onClose, chainId, account }: Props) => {
             setModalType(ModalType.REMOVE);
           }}
         >
-          Remove
+          remove
         </SecondaryButton>
 
         <PrimaryButton
@@ -188,7 +186,7 @@ const AddRemoveModal = ({ value, onClose, chainId, account }: Props) => {
             setModalType(ModalType.ADD);
           }}
         >
-          Add
+          add
         </PrimaryButton>
       </div>
     </Container>

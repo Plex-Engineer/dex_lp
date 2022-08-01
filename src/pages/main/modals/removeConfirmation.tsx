@@ -7,7 +7,7 @@ import { DexLoadingOverlay } from "./addModal";
 import { RowCell } from "./removeModal";
 import { ModalType } from "../hooks/useModals";
 import { useEffect } from "react";
-import { truncateNumber } from "pages/main/utils";
+import { truncateByZeros, truncateNumber } from "pages/main/utils";
 import { useState } from "react";
 import { CantoTestnet, CantoMainnet } from "global/config/networks";
 import { TOKENS as ALLTOKENS } from "global/config/tokens";
@@ -92,7 +92,7 @@ const Container = styled.div`
 
   .rowCell {
     p:first-child {
-      text-transform: lowercase;
+      /* text-transform: lowercase; */
       color: #888;
     }
     p:last-child {
@@ -242,9 +242,9 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
             flexDirection: "column",
             gap: "1rem"
         }}>
-            <RowCell type={props.pair.basePairInfo.token1.symbol + " withdrawing : "} value={Number(props.value1).toFixed(4)} />
-            <RowCell type={props.pair.basePairInfo.token2.symbol + " withdrawing : "} value={Number(props.value2).toFixed(4)} />
-            <RowCell type={"burned: "} value={LPOut} />
+            <RowCell type={props.pair.basePairInfo.token1.symbol + " withdrawing: "} value={truncateByZeros(props.value1.toString()).toString()} />
+            <RowCell type={props.pair.basePairInfo.token2.symbol + " withdrawing: "} value={truncateByZeros(props.value2.toString()).toString()} />
+            <RowCell type={"burned: "} value={truncateByZeros(LPOut.toString()).toString()} />
             {/* <RowCell type="share of pool : " value={calculateExpectedShareofLP(props.expectedLP, props.pair.userSupply.totalLP, props.pair.totalSupply.totalLP).toFixed(8) + "%"} /> */}
         </div>
         {(currentBlockTimeStamp == 0 ? <DisabledButton>loading...</DisabledButton> : props.pair.basePairInfo.token1.address == TOKENS.WCANTO.address ?

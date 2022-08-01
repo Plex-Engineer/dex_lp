@@ -9,7 +9,7 @@ import { RowCell } from "./removeModal";
 import { DexLoadingOverlay } from "./addModal";
 import LoadingModal from "./loadingModal";
 import { useEffect, useState } from "react";
-import { truncateNumber } from "pages/main/utils";
+import { truncateByZeros, truncateNumber } from "pages/main/utils";
 import { CantoTestnet, CantoMainnet } from "global/config/networks";
 import { TOKENS as ALLTOKENS } from "global/config/tokens";
 import ADDRESSES from "global/config/addresses";
@@ -218,7 +218,7 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
             <p id="position">you will receive</p>
             <IconPair iconLeft={props.pair.basePairInfo.token1.icon} iconRight={props.pair.basePairInfo.token2.icon} />
             <h1>
-                {Number(props.expectedLP) == 0 ? "calculating..." : props.expectedLP}
+                {Number(props.expectedLP) == 0 ? "calculating..." : truncateByZeros(props.expectedLP)}
             </h1>
 
             <h4> {props.pair.basePairInfo.token1.symbol +
@@ -230,8 +230,8 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
                 flexDirection: "column",
                 gap: "1rem"
             }}>
-                <RowCell type={props.pair.basePairInfo.token1.symbol + " rate : "} value={"1" + props.pair.basePairInfo.token1.symbol + " = " + (1/Number(props.pair.totalSupply.ratio)).toFixed(3) + props.pair.basePairInfo.token2.symbol} />
-                <RowCell type={props.pair.basePairInfo.token2.symbol + " rate : "} value={"1" + props.pair.basePairInfo.token2.symbol + " = " + (Number(props.pair.totalSupply.ratio)).toFixed(3) + props.pair.basePairInfo.token1.symbol} />
+                <RowCell type={props.pair.basePairInfo.token1.symbol + " rate : "} value={"1 " + props.pair.basePairInfo.token1.symbol + " = " + (1/Number(props.pair.totalSupply.ratio)).toFixed(3) + " " + props.pair.basePairInfo.token2.symbol} />
+                <RowCell type={props.pair.basePairInfo.token2.symbol + " rate : "} value={"1 " + props.pair.basePairInfo.token2.symbol + " = " + (Number(props.pair.totalSupply.ratio)).toFixed(3) + " " + props.pair.basePairInfo.token1.symbol} />
             </div>
             <div style={{
                 borderBottom: "1px solid #222",
@@ -247,7 +247,7 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
             }}>
                 <RowCell type={props.pair.basePairInfo.token1.symbol + " deposited : "} value={Number(props.value1).toFixed(4)} />
                 <RowCell type={props.pair.basePairInfo.token2.symbol + " deposited : "} value={Number(props.value2).toFixed(4)} />
-                <RowCell type="share of pool : " value={calculateExpectedShareofLP(props.expectedLP, props.pair.userSupply.totalLP, props.pair.totalSupply.totalLP).toFixed(8) + "%"} />
+                <RowCell type="share of pool : " value={truncateByZeros(calculateExpectedShareofLP(props.expectedLP, props.pair.userSupply.totalLP, props.pair.totalSupply.totalLP).toString()) + "%"} />
             </div>
 
             {currentBlockTimeStamp == 0 ? <DisabledButton>loading</DisabledButton> : props.pair.basePairInfo.token1.address == TOKENS.WCANTO.address ?
