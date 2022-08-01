@@ -267,7 +267,14 @@ const NavBar = () => {
     netWorkInfo.setChainId(chainId);
     netWorkInfo.setAccount(account);
   },[])
-  const {activateBrowserWallet} = useEthers()
+ 
+  /*
+  the account is the dapp provider that usedapp will use to make multicalls
+  the user may be connected through metamask, but not to usedapp, so if account it undefined,
+  the user must activateBorwserWallet to create a provider for themselves that multicall can use to instantiate a provider for them
+  !! networkInfo.account may have an account, but useEthers account must be checked
+  */
+  const {activateBrowserWallet, account } = useEthers()
   
   //@ts-ignore
   if (window.ethereum) {
@@ -305,7 +312,6 @@ const NavBar = () => {
   };
   window.addEventListener("scroll", changeNavbarColor);
 
-
   return (
     <Container didScroll={colorChange}>
       <div id="logo">
@@ -336,7 +342,7 @@ const NavBar = () => {
         }}
       />
       <div className="wallet">
-      {netWorkInfo.isConnected && netWorkInfo.account ? (
+      {netWorkInfo.isConnected && account ? (
         <button
           onClick={() => {
             // setIsModalOpen(true)
