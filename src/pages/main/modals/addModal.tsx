@@ -147,7 +147,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
       <Button onClick={() => {
         addAllowanceASend(routerAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         addAllowanceBSend(routerAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
-      }}>Enable {props.pair.basePairInfo.token1.symbol} / {props.pair.basePairInfo.token2.symbol}
+      }}>{"enable" + props.pair.basePairInfo.token1.symbol + " & " + props.pair.basePairInfo.token2.symbol}
       </Button>
     )
   } else if (needToken1Allowance && !needToken2Allowance) {
@@ -155,7 +155,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
       <Button onClick={() => {
         addAllowanceASend(routerAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
       }}>
-        Enable {props.pair.basePairInfo.token1.symbol}
+        enable {props.pair.basePairInfo.token1.symbol}
       </Button>
     )
   } else if (!needToken1Allowance && needToken2Allowance) {
@@ -163,7 +163,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
       <Button onClick={() => {
         addAllowanceBSend(routerAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
       }}>
-        Enable For {props.pair.basePairInfo.token2.symbol}
+        enable For {props.pair.basePairInfo.token2.symbol}
       </Button>
     )
   } else {

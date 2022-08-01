@@ -317,7 +317,7 @@ const NavBar = () => {
           </Glitch>
         </a>
       </div>
-      <h1>lending</h1>
+      <h1>lp interface</h1>
       <input
         type="checkbox"
         name="nav-menu"

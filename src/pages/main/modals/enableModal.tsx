@@ -1,6 +1,4 @@
 import styled from "@emotion/styled";
-import Field from "../components/field";
-import Input from "../components/input";
 import { AllPairInfo } from "../hooks/useTokens";
 import { useEffect, useState } from "react";
 import {
@@ -8,9 +6,7 @@ import {
   useSetAllowance,
 } from "pages/main/hooks/useTransactions";
 import LoadingModal from "./loadingModal";
-import SettingsIcon from "assets/settings.svg";
 import IconPair from "../components/iconPair";
-import { truncateNumber, getTokenAFromB, getTokenBFromA } from "../utils";
 import useModals, { ModalType } from "../hooks/useModals";
 
 const Container = styled.div`
@@ -160,7 +156,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
           );
         }}
       >
-        Enable {props.pair.basePairInfo.token1.symbol} /{" "}
+        enable {props.pair.basePairInfo.token1.symbol} {" & "}
         {props.pair.basePairInfo.token2.symbol}
       </Button>
     );
@@ -174,7 +170,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
           );
         }}
       >
-        Enable {props.pair.basePairInfo.token1.symbol}
+        enable {props.pair.basePairInfo.token1.symbol}
       </Button>
     );
   } else {
@@ -187,7 +183,7 @@ const AddAllowanceButton = (props: AddAllowanceProps) => {
           );
         }}
       >
-        Enable For {props.pair.basePairInfo.token2.symbol}
+        enable {props.pair.basePairInfo.token2.symbol}
       </Button>
     );
   }
@@ -227,7 +223,7 @@ const RemoveAllowanceButton = (props: AddAllowanceProps) => {
         );
       }}
     >
-      Enable {props.pair.basePairInfo.token1.symbol}/
+      enable {props.pair.basePairInfo.token1.symbol}/
       {props.pair.basePairInfo.token2.symbol}_LP
     </Button>
   );
@@ -325,10 +321,7 @@ const EnableModal = ({ value, onClose, chainId, account }: Props) => {
           textAlign: "center",
         }}
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-        exercitationem totam modi quasi? Inventore voluptatibus veritatis itaque
-        vitae id fugiat tenetur nesciunt vel maxime. Repellat commodi possimus
-        minima alias voluptatem.
+        enable your tokens to be transfered in the canto lp interface
       </p>
       {prevModalType == ModalType.ADD ? (
         <AddAllowanceButton
