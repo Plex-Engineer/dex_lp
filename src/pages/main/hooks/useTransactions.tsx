@@ -7,7 +7,10 @@ import ADDRESSES from "global/config/addresses";
 interface Details {
     address: string,
     name : string,
-    icon : string,
+    icon : {
+        icon1 : string,
+        icon2 : string
+    } | string,
     amount : string,
     type : string,
   }

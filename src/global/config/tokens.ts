@@ -14,7 +14,7 @@ export interface Token {
     address: string,
     isERC20: boolean,
     isLP: boolean,
-    icon: any,
+    icon: string,
     cTokenAddress: string
 }
 export interface CTOKEN {

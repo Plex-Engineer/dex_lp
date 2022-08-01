@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const Table = styled.table`
+const Container = styled.table`
   & {
     border: none;
     /* border: var(--primary-color) solid 1px; */
@@ -51,21 +51,21 @@ type Props = {
   columns : string[];
 };
 
-const DexTable: React.FC<Props> = (props) => {
+const Table: React.FC<Props> = (props) => {
   return (
     <div style={{
       overflowX: "auto",
     }}>
-      <Table>
+      <Container>
       <thead>
         <tr>
           {props.columns.map((item)=><th>{item}</th>)}
         </tr>
       </thead>
       <tbody>{props.children}</tbody>
-    </Table>
+    </Container>
     </div>
   );
 };
 
-export default DexTable;
+export default Table;

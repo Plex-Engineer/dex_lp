@@ -149,14 +149,20 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
         type : "remove",
         address : "",
         amount : "-1",
-        icon : "",
+         icon : {
+            icon1 : props.pair.basePairInfo.token1.icon,
+            icon2 : props.pair.basePairInfo.token2.icon
+        },
         name : props.pair.basePairInfo.token1.symbol + "/" + props.pair.basePairInfo.token2.symbol
     });
     const { state: removeLiquidityCANTOState, send: removeLiquidityCANTOSend } = useRemoveLiquidityCANTO(props.chainId,{
         type : "remove",
         address : "",
         amount : "-1",
-        icon : "",
+         icon : {
+            icon1 : props.pair.basePairInfo.token1.icon,
+            icon2 : props.pair.basePairInfo.token2.icon
+        },
         name : props.pair.basePairInfo.token1.symbol + "/" + props.pair.basePairInfo.token2.symbol
     });
     const setModalType = useModals(state => state.setModalType);

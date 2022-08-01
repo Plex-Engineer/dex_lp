@@ -8,9 +8,7 @@ import {
   useSetAllowance,
 } from "pages/main/hooks/useTransactions";
 import LoadingModal from "./loadingModal";
-import SettingsIcon from "assets/settings.svg";
 import IconPair from "../components/iconPair";
-import { truncateNumber, getTokenAFromB, getTokenBFromA } from "../utils";
 import useModals, { ModalType } from "../hooks/useModals";
 
 const Container = styled.div`
@@ -98,9 +96,8 @@ interface AddAllowanceProps {
 }
 
 const AddAllowanceButton = (props: AddAllowanceProps) => {
-  const [setModalType, setConfirmationValues] = useModals((state) => [
+  const [setModalType] = useModals((state) => [
     state.setModalType,
-    state.setConfirmationValues,
   ]);
 
   const routerAddress = getRouterAddress(props.chainId);

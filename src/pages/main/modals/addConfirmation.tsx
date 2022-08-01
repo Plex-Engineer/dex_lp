@@ -153,14 +153,20 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
         type : "add",
         address : "",
         amount : "-1",
-        icon : "",
+        icon : {
+            icon1 : props.pair.basePairInfo.token1.icon,
+            icon2 : props.pair.basePairInfo.token2.icon
+        },
         name : props.pair.basePairInfo.token1.symbol + "/" + props.pair.basePairInfo.token2.symbol
     });
     const { state: addLiquidityCANTOState, send: addLiquidityCANTOSend } = useAddLiquidityCANTO(props.chainId,{
         type : "add",
         address : "",
         amount : "-1",
-        icon : "",
+        icon : {
+            icon1 : props.pair.basePairInfo.token1.icon,
+            icon2 : props.pair.basePairInfo.token2.icon
+        },
         name : props.pair.basePairInfo.token1.symbol + "/" + props.pair.basePairInfo.token2.symbol
     });
     // const [addLiquidityStatus, setAddLiquidity1Status] = useState("None");

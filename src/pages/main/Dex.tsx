@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import useDex from "pages/main/hooks/useTokens";
 import { AllPairInfo } from "pages/main/hooks/useTokens";
 import { noteSymbol } from "global/utils/utils";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNotifications, useEthers } from "@usedapp/core";
 import {
-  addNetwork,
   checkNetworkVersion,
 } from "global/config/addCantoToWallet";
 import useModals, { ModalType } from "./hooks/useModals";
 import { ModalManager } from "./modals/ModalManager";
+import style from "./Dex.module.scss"
 
 const Container = styled.div`
   display: flex;
@@ -164,7 +164,7 @@ const Dex = () => {
       <h1>please switch to canto mainnet</h1>
     </div>
   ) : (
-    <Container>
+    <Container style={style}>
 
       <div style={{ marginBottom: "75px" }}>
         <ModalManager
@@ -188,6 +188,16 @@ const Dex = () => {
       {notifs.filter(
               (filterItem) => filterItem.type == "transactionStarted"
             ).length > 0 ? (
+              <div>
+          <p 
+            style={{
+              width: "1200px",
+              margin: "0 auto",
+              padding: "0",
+            }}
+          >
+            ongoing transaction
+          </p>
               <Table columns={["name","transaction","time"]}>
                 {notifs.map((item) => {
                   if (
@@ -211,6 +221,7 @@ const Dex = () => {
                     }
                     return (
                       <TransactionRow
+                      key={item.submittedAt}
                         icon={msg.icon}
                         name={msg.name.toLowerCase()}
                         status={
@@ -228,11 +239,12 @@ const Dex = () => {
                   }
                 })}
               </Table>
+              </div>
             ) : null}
       {pairs?.filter((pair: AllPairInfo) => Number(pair.userSupply.totalLP) > 0)
         .length ?? 0 > 0 ? (
         <div>
-          <p
+          <p className="table-name"
             style={{
               width: "1200px",
               margin: "0 auto",
