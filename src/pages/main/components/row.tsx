@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import IconPair from "./iconPair";
 
 interface ButtonProps {
   primary?: boolean;
@@ -72,7 +73,12 @@ const Row = (props: RowProps) => {
 
 interface TransactionProps {
   name: string;
-  // icon: string;
+  icons:
+    | {
+        icon1: string;
+        icon2: string;
+      }
+    | string;
   status: string;
   onClick?: () => void;
   date: Date;
@@ -81,8 +87,21 @@ interface TransactionProps {
 export const TransactionRow = (props: TransactionProps) => {
   return (
     <tr onClick={props.onClick}>
-      <td>
-        {/* <img src={props.icon} />  */}
+
+<td style={{
+        display : "flex",
+        justifyContent : "center"
+      }}> <span style={{
+        display : "flex",
+ 
+        alignContent : "center",
+        alignItems : "center"
+      }}>
+        {typeof props.icons != "string" ? (
+        <IconPair iconLeft={props.icons.icon1} iconRight={props.icons.icon2} />
+      ) : (
+        <img src={props.icons} height={30} style={{marginRight : "10px"}} />
+      )}  </span>
         <span>{props.name}</span>
       </td>
       <td>{props.status}</td>

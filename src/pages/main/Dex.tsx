@@ -220,7 +220,7 @@ const Dex = () => {
                     return (
                       <TransactionRow
                       key={item.submittedAt}
-                        // icon={msg.icon}
+                        icons={msg.icon}
                         name={msg.name.toLowerCase()}
                         status={
                           msg.type +
