@@ -72,7 +72,7 @@ const Row = (props: RowProps) => {
 
 interface TransactionProps {
   name: string;
-  icon: string;
+  // icon: string;
   status: string;
   onClick?: () => void;
   date: Date;
@@ -82,7 +82,8 @@ export const TransactionRow = (props: TransactionProps) => {
   return (
     <tr onClick={props.onClick}>
       <td>
-        <img src={props.icon} /> <span>{props.name}</span>
+        {/* <img src={props.icon} />  */}
+        <span>{props.name}</span>
       </td>
       <td>{props.status}</td>
       <td>{props.date.toDateString()}</td>
