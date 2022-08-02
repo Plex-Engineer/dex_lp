@@ -242,7 +242,7 @@ const Dex = () => {
       {pairs?.filter((pair: AllPairInfo) => Number(pair.userSupply.totalLP) > 0)
         .length ?? 0 > 0 ? (
         <div>
-          <p className="table-name"
+          <p className="tableName"
             style={{
               width: "1200px",
               margin: "0 auto",

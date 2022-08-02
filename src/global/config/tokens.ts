@@ -59,7 +59,7 @@ export const decimals = {
     USDC: 6,
     USDT: 6,
     ETH: 18,
-    ATOM: 8,
+    ATOM: 6,
     WETH: 18,
 
     cNote: 18,
