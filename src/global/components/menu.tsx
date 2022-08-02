@@ -28,9 +28,8 @@ const BurgerStyles = {
     marginLeft: "-47px",
   },
   bmMenu: {
-    
     background: "#000000",
-    padding: "2.5em 1.5em 0",
+    padding: "0em .5em 0",
     fontSize: "1.15em",
   },
   bmMorphShape: {
@@ -49,21 +48,19 @@ const BurgerStyles = {
     background: "rgba(0, 0, 0, 0.3)",
     width: "0px",
     height: "0px",
-    
   },
 };
-
 export const BurgerMenu = () => {
   return (
     <Menu  styles={BurgerStyles}>
       <h2>terminal</h2>
-      <a id="bridge" className="menu-item" href="https://bridge-canto.netlify.app/">bridge</a>
-      <a id="convertCoin" className="menu-item" href="/">convert coin</a>
-      <a id="generator" className="menu-item" href="https://generator-canto.netlify.app/">generator</a>
-      <a id="governance" className="menu-item" href="https://governance-canto.netlify.app/">governance</a>
-      <a id="lending" className="menu-item" href="/">lending</a>
-      <a id="lpInterface" className="menu-item" href="/">lp interface</a>
-      <a id="staking" className="menu-item" href="https://staking-canto.netlify.app/">staking</a>
+      <a id="bridge" className="menu-item" href="https://bridge.canto.io">bridge</a>
+      <a id="convertCoin" className="menu-item" href="https://convert.canto.io">convert coin</a>
+      <a id="generator" className="menu-item" href="https://generator.canto.io">generator</a>
+      <a id="governance" className="menu-item" href="https://governance.canto.io">governance</a>
+      <a id="lending" className="menu-item" href="https://lending.canto.io">lending</a>
+      <a id="lpInterface" className="menu-item" href="https://lp.canto.io">lp interface</a>
+      <a id="staking" className="menu-item" href="https://staking.canto.io">staking</a>
     </Menu>
   );
 };
