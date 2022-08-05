@@ -1,37 +1,9 @@
 import { Chain, Config } from "@usedapp/core";
-import addresses from "global/config/addresses"
-import { TESTPAIRS, MAINPAIRS} from "global/config/pairs";
-import { TOKENS } from "./tokens";
+import { CantoMainnet as CantoMain, CantoTestnet as CantoTest } from "cantoui";
 
 export const getAddressLink = (explorerUrl: string) => (address: string) => `${explorerUrl}/address/${address}`
 
 export const getTransactionLink = (explorerUrl: string) => (txnId: string) => `${explorerUrl}/tx/${txnId}`
-
-export const CantoMain = {
-  name: "Canto Mainnet",
-  symbol: "CANTO",
-  chainId: 7700,
-  addresses: addresses.cantoMainnet,
-  tokens: TOKENS.cantoMainnet,
-  pairs : MAINPAIRS,
-  rpcUrl: "https://evm.plexnode.wtf",
-  cosmosAPIEndpoint: "https://cosmos.plexnode.wtf/",
-  isTestChain: false,
-  blockExplorerUrl: "https://evm.explorer.canto.io/",
-};
-
-export const CantoTest = {
-  name: "Canto Testnet",
-  symbol: "CANTO",
-  chainId: 740,
-  addresses: addresses.testnet,
-  tokens: TOKENS.cantoTestnet,
-  pairs: TESTPAIRS,
-  rpcUrl: "https://eth.plexnode.wtf",
-  cosmosAPIEndpoint: "https://chain.plexnode.wtf/",
-  isTestChain: true,
-  blockExplorerUrl: "https://www.nothing.com",
-};
 
 
 export const CantoTestnet: Chain = {

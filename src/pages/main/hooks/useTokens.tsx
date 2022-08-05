@@ -2,10 +2,8 @@ import { useCalls, useEtherBalance } from "@usedapp/core";
 import { ERC20Abi, routerAbi } from "pages/main/config/abi";
 import { Contract} from "ethers";
 import { formatUnits, formatEther } from "ethers/lib/utils";
-import { PAIR, TESTPAIRS, MAINPAIRS } from "global/config/pairs";
-import { CantoTestnet, CantoMainnet} from "global/config/networks"
-import ADDRESSES from "global/config/addresses";
-import {TOKENS as ALLTOKENS} from "global/config/tokens";
+import { PAIR, TESTPAIRS, MAINPAIRS } from "pages/main/config/pairs";
+import { TOKENS as ALLTOKENS, ADDRESSES, CantoTestnet, CantoMainnet } from "cantoui";
 
 
 

@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
-import Field from "../components/field";
 import Input from "../components/input";
 import { AllPairInfo } from "../hooks/useTokens";
 import { useEffect, useState } from "react";
-import { noteSymbol } from "global/utils/utils";
+import { noteSymbol } from "global/utils/formatting";
 import {
   getRouterAddress,
   useSetAllowance,
@@ -13,7 +12,7 @@ import { DexLoadingOverlay, PopIn } from "./addModal";
 import SettingsIcon from "assets/settings.svg";
 import IconPair from "../components/iconPair";
 import useModals, { ModalType } from "../hooks/useModals";
-import { truncateByZeros } from "../utils";
+import { truncateByZeros } from "../utils/utils";
 
 const Container = styled.div`
   background-color: #040404;

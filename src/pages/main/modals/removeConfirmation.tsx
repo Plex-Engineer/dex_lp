@@ -7,11 +7,11 @@ import { DexLoadingOverlay } from "./addModal";
 import { RowCell } from "./removeModal";
 import { ModalType } from "../hooks/useModals";
 import { useEffect } from "react";
-import { truncateByZeros, truncateNumber } from "pages/main/utils";
+import { truncateByZeros, truncateNumber } from "pages/main/utils/utils";
 import { useState } from "react";
 import { CantoTestnet, CantoMainnet } from "global/config/networks";
-import { TOKENS as ALLTOKENS } from "global/config/tokens";
 import useModals from "../hooks/useModals";
+import { TOKENS } from "cantoui";
 
 
 
@@ -167,7 +167,7 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
     });
     const setModalType = useModals(state => state.setModalType);
 
-    const TOKENS = props.chainId == CantoTestnet.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet;
+    const WCANTO = props.chainId == CantoTestnet.chainId ? TOKENS.cantoTestnet.WCANTO : TOKENS.cantoMainnet.WCANTO;
 
     const LPOut = props.percentage == 100 ? props.pair.userSupply.totalLP : truncateNumber(((Number((props.pair.userSupply.totalLP)) * Number(props.percentage)) / 100), props.pair.basePairInfo.decimals).toString();
     const amountMinOut1 = truncateNumber((((Number(props.value1)) * (100 - Number(props.slippage))) / 100), props.pair.basePairInfo.token1.decimals).toString();
@@ -271,7 +271,7 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
             <RowCell type={"burned: "} value={truncateByZeros(LPOut.toString()).toString()} />
             {/* <RowCell type="share of pool : " value={calculateExpectedShareofLP(props.expectedLP, props.pair.userSupply.totalLP, props.pair.totalSupply.totalLP).toFixed(8) + "%"} /> */}
         </div>
-        {(currentBlockTimeStamp == 0 ? <DisabledButton>loading...</DisabledButton> : props.pair.basePairInfo.token1.address == TOKENS.WCANTO.address ?
+        {(currentBlockTimeStamp == 0 ? <DisabledButton>loading...</DisabledButton> : props.pair.basePairInfo.token1.address == WCANTO.address ?
 
             <Button onClick={() => {
                 // console.log(props);

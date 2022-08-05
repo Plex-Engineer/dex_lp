@@ -1,6 +1,6 @@
 import { AllPairInfo } from "../hooks/useTokens";
 import styled from "@emotion/styled";
-import { noteSymbol } from "global/utils/utils";
+import { noteSymbol } from "global/utils/formatting";
 import IconPair from "../components/iconPair";
 import useModals, { ModalType } from "../hooks/useModals";
 const Container = styled.div`

@@ -7,7 +7,7 @@ import { getRouterAddress, useSetAllowance } from "pages/main/hooks/useTransacti
 import LoadingModal from "./loadingModal";
 import SettingsIcon from "assets/settings.svg"
 import IconPair from "../components/iconPair";
-import { truncateNumber,getTokenAFromB, getTokenBFromA } from "../utils";
+import { truncateNumber,getTokenAFromB, getTokenBFromA } from "../utils/utils";
 import useModals, { ModalType } from "../hooks/useModals";
 
 const Container = styled.div`

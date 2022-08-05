@@ -1,9 +1,9 @@
 import Dex from 'pages/main/Dex'
 import './App.scss'
 import { Overlay, ScanLine, ScanlinesOverlay, StaticNoiseOverlay } from 'global/styled-components/Overlays'
-import NavBar from 'global/components/navbar'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { CantoNav } from 'global/components/cantoNav'
 function App() {
 
   return (
@@ -13,7 +13,7 @@ function App() {
       <ScanlinesOverlay />
       <ScanLine/>
       <Overlay/>
-      <NavBar/>
+      <CantoNav/>
       <Dex/>
     </div>
   )
