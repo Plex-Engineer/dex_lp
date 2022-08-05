@@ -13,7 +13,7 @@ export const TESTPAIRS: PAIR[] = [
     {
         address: ADDRESSES.testnet.CantoNoteLP,
         cLPaddress: ADDRESSES.testnet.cCantoNoteLP,
-        token1: TOKENS.cantoTestnet.WCANTO,  // CANTO,
+        token1: {...TOKENS.cantoTestnet.WCANTO, symbol:"CANTO"},  // CANTO,
         token2: TOKENS.cantoTestnet.NOTE,  // NOTE,
         decimals: TOKENS.cantoTestnet.CantoNote.decimals,
         stable: false
@@ -21,7 +21,7 @@ export const TESTPAIRS: PAIR[] = [
     {
         address: ADDRESSES.testnet.CantoETHLP,
         cLPaddress: ADDRESSES.testnet.cCantoETHLP,
-        token1: TOKENS.cantoTestnet.WCANTO,  // CANTO,
+        token1: {...TOKENS.cantoTestnet.WCANTO, symbol:"CANTO"},  // CANTO,
         token2: TOKENS.cantoTestnet.ETH,  // ETH,
         decimals: TOKENS.cantoTestnet.CantoETH.decimals,
         stable: false
@@ -29,7 +29,7 @@ export const TESTPAIRS: PAIR[] = [
     {
         address: ADDRESSES.testnet.CantoAtomLP,
         cLPaddress: ADDRESSES.testnet.cCantoAtomLP,
-        token1: TOKENS.cantoTestnet.WCANTO,  // CANTO,
+        token1: {...TOKENS.cantoTestnet.WCANTO, symbol:"CANTO"},  // CANTO,
         token2: TOKENS.cantoTestnet.ATOM,  // ATOM,
         decimals: TOKENS.cantoTestnet.CantoAtom.decimals,
         stable: false
@@ -55,7 +55,7 @@ export const MAINPAIRS: PAIR[] = [
     {
         address: ADDRESSES.cantoMainnet.CantoNoteLP,
         cLPaddress: ADDRESSES.cantoMainnet.cCantoNoteLP,
-        token1: TOKENS.cantoMainnet.WCANTO,  // CANTO,
+        token1: {...TOKENS.cantoMainnet.WCANTO, symbol: "CANTO"},  // CANTO,
         token2: TOKENS.cantoMainnet.NOTE,  // NOTE,
         decimals: TOKENS.cantoMainnet.CantoNote.decimals,
         stable: false
@@ -63,7 +63,7 @@ export const MAINPAIRS: PAIR[] = [
     {
         address: ADDRESSES.cantoMainnet.CantoETHLP,
         cLPaddress: ADDRESSES.cantoMainnet.cCantoETHLP,
-        token1: TOKENS.cantoMainnet.WCANTO,  // CANTO,
+        token1: {...TOKENS.cantoMainnet.WCANTO, symbol: "CANTO"},  // CANTO,
         token2: TOKENS.cantoMainnet.ETH,  // ETH,
         decimals: TOKENS.cantoMainnet.CantoETH.decimals,
         stable: false
@@ -71,7 +71,7 @@ export const MAINPAIRS: PAIR[] = [
     {
         address: ADDRESSES.cantoMainnet.CantoAtomLP,
         cLPaddress: ADDRESSES.cantoMainnet.cCantoAtomLP,
-        token1: TOKENS.cantoMainnet.WCANTO,  // CANTO,
+        token1: {...TOKENS.cantoMainnet.WCANTO, symbol: "CANTO"},  // CANTO,
         token2: TOKENS.cantoMainnet.ATOM,  // ATOM,
         decimals: TOKENS.cantoMainnet.CantoAtom.decimals,
         stable: false

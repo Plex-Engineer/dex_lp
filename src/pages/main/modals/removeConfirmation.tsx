@@ -7,7 +7,7 @@ import { DexLoadingOverlay } from "./addModal";
 import { RowCell } from "./removeModal";
 import { ModalType } from "../hooks/useModals";
 import { useEffect } from "react";
-import { truncateByZeros, truncateNumber } from "pages/main/utils/utils";
+import { getCurrentBlockTimestamp, truncateByZeros, truncateNumber } from "pages/main/utils/utils";
 import { useState } from "react";
 import { CantoTestnet, CantoMainnet } from "global/config/networks";
 import useModals from "../hooks/useModals";
@@ -174,13 +174,10 @@ export const RemoveLiquidityButton = (props: RemoveConfirmationProps) => {
     const amountMinOut2 = truncateNumber((((Number(props.value2)) * (100 - Number(props.slippage))) / 100), props.pair.basePairInfo.token2.decimals).toString();
 
     //getting current block timestamp to add to the deadline that the user inputs
-    const provider = new ethers.providers.JsonRpcProvider(CantoTestnet.chainId == props.chainId ? CantoTestnet.rpcUrl : CantoMainnet.rpcUrl);
     const [currentBlockTimeStamp, setCurrentBlockTimeStamp] = useState(0);
     
     async function blockTimeStamp() {
-        const blockNumber = await provider.getBlockNumber();
-        const blockData = await provider.getBlock(blockNumber)
-        setCurrentBlockTimeStamp(blockData.timestamp)
+        setCurrentBlockTimeStamp(await getCurrentBlockTimestamp(props.chainId))
     }
     
 
