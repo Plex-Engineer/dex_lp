@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { formatBalance } from "global/utils/utils";
+import { formatBalance } from "global/utils/formatting";
 
 type styleProps = {
   focused: boolean;

@@ -4,13 +4,13 @@ import Row, { TransactionRow } from "./components/row";
 import { useEffect, useState } from "react";
 import useDex from "pages/main/hooks/useTokens";
 import { AllPairInfo } from "pages/main/hooks/useTokens";
-import { noteSymbol } from "global/utils/utils";
+import { noteSymbol } from "global/utils/formatting";
 import { toast } from "react-toastify";
 import { useNotifications } from "@usedapp/core";
 import useModals, { ModalType } from "./hooks/useModals";
 import { ModalManager } from "./modals/ModalManager";
 import style from "./Dex.module.scss"
-import  {addNetwork} from "global/config/addCantoToWallet";
+import  {addNetwork} from "global/utils/walletConnect/addCantoToWallet";
 import { useNetworkInfo } from "./hooks/networkInfo";
 
 const Container = styled.div`

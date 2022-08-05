@@ -1,11 +1,9 @@
 import { useCalls, useEtherBalance } from "@usedapp/core";
 import { ERC20Abi, routerAbi } from "pages/main/config/abi";
-import { Contract} from "ethers";
+import { Contract, ethers} from "ethers";
 import { formatUnits, formatEther } from "ethers/lib/utils";
-import { PAIR, TESTPAIRS, MAINPAIRS } from "global/config/pairs";
-import { CantoTestnet, CantoMainnet} from "global/config/networks"
-import ADDRESSES from "global/config/addresses";
-import {TOKENS as ALLTOKENS} from "global/config/tokens";
+import { PAIR, TESTPAIRS, MAINPAIRS } from "pages/main/config/pairs";
+import { TOKENS as ALLTOKENS, ADDRESSES, CantoTestnet, CantoMainnet } from "cantoui";
 
 
 
@@ -150,7 +148,7 @@ const useTokens = (account: string | undefined, chainId: number | undefined) => 
         reserves.reserveB.toString(),
         PAIRS[idx].token2.decimals
       );
-      const ratio = Number(reserveA) / Number(reserveB);
+      const ratio = Number((Number(reserveA) / Number(reserveB)).toFixed(6));    
       const userLP = formatUnits(tokenData[0][0], PAIRS[idx].decimals);
       
       let token1Balance;

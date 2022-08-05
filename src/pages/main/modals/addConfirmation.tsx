@@ -9,11 +9,10 @@ import { RowCell } from "./removeModal";
 import { DexLoadingOverlay } from "./addModal";
 import LoadingModal from "./loadingModal";
 import { useEffect, useState } from "react";
-import { truncateByZeros, truncateNumber } from "pages/main/utils";
-import { CantoTestnet, CantoMainnet } from "global/config/networks";
-import { TOKENS as ALLTOKENS } from "global/config/tokens";
-import ADDRESSES from "global/config/addresses";
+import { getCurrentBlockTimestamp, truncateByZeros, truncateNumber } from "pages/main/utils/utils";
 import useModals, { ModalType } from "../hooks/useModals";
+
+import { TOKENS, ADDRESSES, CantoMainnet, CantoTestnet } from "cantoui";
 
 
 
@@ -169,9 +168,8 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
         },
         name : props.pair.basePairInfo.token1.symbol + "/" + props.pair.basePairInfo.token2.symbol
     });
-    // const [addLiquidityStatus, setAddLiquidity1Status] = useState("None");
-    // const [addLiquidityCantoStatus, setAddLiquidityCantp2Status] = useState("None");
-    const TOKENS = props.chainId == CantoTestnet.chainId ? ALLTOKENS.cantoTestnet : ALLTOKENS.cantoMainnet;
+
+    const WCANTO = props.chainId == CantoTestnet.chainId ? TOKENS.cantoTestnet.WCANTO : TOKENS.cantoMainnet.WCANTO;
     const setModalType = useModals(state => state.setModalType);
     
     const amountOut1 = truncateNumber(Number(props.value1),props.pair.basePairInfo.token1.decimals).toString();
@@ -180,14 +178,10 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
     const amountMinOut1 = truncateNumber((((Number(props.value1)) * (100 - Number(props.slippage))) / 100),props.pair.basePairInfo.token1.decimals).toString();
     const amountMinOut2 = truncateNumber((((Number(props.value2)) * (100 - Number(props.slippage))) / 100),props.pair.basePairInfo.token2.decimals).toString();
 
-    //getting current block timestamp to add to the deadline that the user inputs
-    const provider = new ethers.providers.JsonRpcProvider(CantoTestnet.chainId == props.chainId ? CantoTestnet.rpcUrl : CantoMainnet.rpcUrl);
     const [currentBlockTimeStamp, setCurrentBlockTimeStamp] = useState(0);
     
    async function blockTimeStamp() {
-        const blockNumber = await provider.getBlockNumber();
-        const blockData = await provider.getBlock(blockNumber)
-        setCurrentBlockTimeStamp(blockData.timestamp)
+        setCurrentBlockTimeStamp(await getCurrentBlockTimestamp(props.chainId))
    }
 
     useEffect(() => {
@@ -274,7 +268,7 @@ const AddLiquidityButton = (props: AddConfirmationProps) => {
                 <RowCell type="share of pool : " value={truncateByZeros(calculateExpectedShareofLP(props.expectedLP, props.pair.userSupply.totalLP, props.pair.totalSupply.totalLP).toString()) + "%"} />
             </div>
 
-            {currentBlockTimeStamp == 0 ? <DisabledButton>loading</DisabledButton> : props.pair.basePairInfo.token1.address == TOKENS.WCANTO.address ?
+            {currentBlockTimeStamp == 0 ? <DisabledButton>loading</DisabledButton> : props.pair.basePairInfo.token1.address == WCANTO.address ?
 
 
                 <Button onClick={() => {
