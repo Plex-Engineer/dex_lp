@@ -327,7 +327,7 @@ const RemoveModal = ({ value, onClose, chainId, account }: Props) => {
       </div>
       <div style={{ color: "white" }}>
         1 {value.basePairInfo.token1.symbol} ={" "}
-        {(1 / value.totalSupply.ratio).toFixed(2)}{" "}
+        {truncateByZeros((1 / value.totalSupply.ratio).toString())}{" "}
         {value.basePairInfo.token2.symbol}
       </div>
 
