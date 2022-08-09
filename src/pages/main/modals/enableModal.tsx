@@ -311,7 +311,7 @@ const EnableModal = ({ value, onClose, chainId, account }: Props) => {
             }
           }
           name={
-            value.basePairInfo.token1.symbol + "/ " + value.basePairInfo.token2.symbol
+            value.basePairInfo.token1.symbol + " / " + value.basePairInfo.token2.symbol
           }
           amount={"0"}
           type="enable"

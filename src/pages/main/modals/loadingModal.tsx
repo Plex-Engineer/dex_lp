@@ -78,7 +78,7 @@ const LoadingModal = (props: ILoading) => {
     case "PendingSignature":
       switch (props.type) {
         case "enable":
-          currentStatus = "please sign to enable token/s";
+          currentStatus = "please sign to enable tokens";
           break;
         case "add":
           currentStatus = "please sign to add liquidity";
@@ -93,7 +93,7 @@ const LoadingModal = (props: ILoading) => {
     case "Mining":
       switch (props.type) {
         case "enable":
-          currentStatus = "enabling token/s";
+          currentStatus = "enabling tokens";
           break;
         case "add":
           currentStatus = "adding liquidity";
@@ -132,7 +132,7 @@ const LoadingModal = (props: ILoading) => {
           currentStatus = "unable to remove";
           break;
           default :
-          currentStatus = "Cancelled";
+          currentStatus = "cancelled";
       }
       break;
   }
