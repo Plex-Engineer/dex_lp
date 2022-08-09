@@ -9,9 +9,8 @@ import { ModalType } from "../hooks/useModals";
 import { useEffect } from "react";
 import { getCurrentBlockTimestamp, truncateByZeros, truncateNumber } from "pages/main/utils/utils";
 import { useState } from "react";
-import { CantoTestnet, CantoMainnet } from "global/config/networks";
 import useModals from "../hooks/useModals";
-import { TOKENS } from "cantoui";
+import { TOKENS, CantoTestnet } from "cantoui";
 
 
 

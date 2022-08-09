@@ -7,7 +7,7 @@ import { getRouterAddress, useSetAllowance } from "pages/main/hooks/useTransacti
 import LoadingModal from "./loadingModal";
 import SettingsIcon from "assets/settings.svg"
 import IconPair from "../components/iconPair";
-import { truncateNumber,getTokenAFromB, getTokenBFromA } from "../utils/utils";
+import { getTokenAFromB, getTokenBFromA, truncateByZeros } from "../utils/utils";
 import useModals, { ModalType } from "../hooks/useModals";
 
 const Container = styled.div`
@@ -252,16 +252,16 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
 
   function getToken1Limit() {
     if ((Number(value.balances.token2) * value.totalSupply.ratio) > Number(value.balances.token1)) {
-      return truncateNumber(Number(value.balances.token1), 5)
+      return truncateByZeros(value.balances.token1)
     } else {
-      return truncateNumber((Number(value.balances.token2) * value.totalSupply.ratio), 5)
+      return truncateByZeros((Number(value.balances.token2) * value.totalSupply.ratio).toString())
     }
   }
   function getToken2Limit() {
     if ((Number(value.balances.token1) / value.totalSupply.ratio) > Number(value.balances.token2)) {
-      return truncateNumber(Number(value.balances.token2), 5)
+      return truncateByZeros(value.balances.token2)
     } else {
-      return truncateNumber((Number(value.balances.token1) / value.totalSupply.ratio), 5)
+      return truncateByZeros((Number(value.balances.token1) / value.totalSupply.ratio).toString())
     }
   }
 
@@ -327,7 +327,7 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
             value={value1}
             onChange={(val) => {
               setValue1(val);
-              setValue2(truncateNumber(getTokenBFromA(Number(val), value.totalSupply.ratio), 5).toString());
+              setValue2(truncateByZeros(getTokenBFromA(Number(val), value.totalSupply.ratio).toString()).toString());
             }}
           />
         </div>
@@ -342,13 +342,13 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
             value={value2}
             onChange={(val) => {
               setValue2(val);
-              setValue1(truncateNumber(getTokenAFromB(Number(val), value.totalSupply.ratio), 5).toString());
+              setValue1(truncateByZeros(getTokenAFromB(Number(val), value.totalSupply.ratio).toString()).toString());
             }}
           />
         </div>
       </div>
       <div style={{ color: "white" }}>
-         {"1 " + value.basePairInfo.token1.symbol + " = " + (1 / value.totalSupply.ratio).toFixed(3) + " " + value.basePairInfo.token2.symbol}
+         {"1 " + value.basePairInfo.token1.symbol + " = " + truncateByZeros((1 / value.totalSupply.ratio).toString()) + " " + value.basePairInfo.token2.symbol}
       </div>
       <div className="fields" style={{
         flexDirection: "column",

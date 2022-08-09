@@ -9,12 +9,16 @@ export const CantoNav = () => {
   const netWorkInfo = useNetworkInfo();
   const { activateBrowserWallet, account } = useEthers();
 
-  useEffect(() => {
-    const [chainId, account] = getChainIdandAccount();
+  async function setChainInfo() {
+    const [chainId, account] = await getChainIdandAccount();
     netWorkInfo.setChainId(chainId);
     netWorkInfo.setAccount(account);
+  }
+
+  useEffect(() => {
+    setChainInfo();
     //@ts-ignore
-  }, [window.ethereum?.selectedAddress, window.ethereum?.networkVersion]);
+  }, [window.ethereum?.networkVersion, window.ethereum?.selectedAddress]);
 
   //@ts-ignore
   if (window.ethereum) {
