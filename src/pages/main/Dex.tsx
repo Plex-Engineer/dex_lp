@@ -12,6 +12,7 @@ import { ModalManager } from "./modals/ModalManager";
 import style from "./Dex.module.scss"
 import  {addNetwork} from "global/utils/walletConnect/addCantoToWallet";
 import { useNetworkInfo } from "./hooks/networkInfo";
+import { truncateByZeros } from "./utils/utils";
 
 const Container = styled.div`
   display: flex;
@@ -69,7 +70,7 @@ const Dex = () => {
 
   const pairs = useDex(networkInfo.account, Number(networkInfo.chainId));
 
- 
+ console.log(pairs)
 
   //Let the user know if they are on the wrong network
   useEffect(() => {
@@ -273,7 +274,7 @@ const Dex = () => {
                   totalValueLocked={noteSymbol + pair.totalSupply.tvl}
                   apr={"23.2"}
                   position={
-                    Number(pair.userSupply.totalLP).toFixed(4) + " LP Tokens"
+                    truncateByZeros(pair.userSupply.totalLP) + " LP Tokens"
                   }
                   share={(pair.userSupply.percentOwned * 100)
                     .toFixed(2)

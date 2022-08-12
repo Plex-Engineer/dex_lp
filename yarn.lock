@@ -1631,10 +1631,10 @@
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001373.tgz"
   "version" "1.0.30001373"
 
-"cantoui@^1.0.10":
-  "integrity" "sha512-gsh1/cLS3BDm+qUFvtQpmpbypK1Pyu8rg1ls7aGaRKPfJRrCm0LJnY87I/p7GUJl1KAN7ilyFxEI1BGxf/DAaA=="
-  "resolved" "https://registry.npmjs.org/cantoui/-/cantoui-1.0.10.tgz"
-  "version" "1.0.10"
+"cantoui@^1.0.14":
+  "integrity" "sha512-2WoEplslEp3uxniy+b++KjlwstX3K1IC5SUmOCrYQb8zzQEfR56FABxd7dFoMlVNI6MPYnHy+6VTzyNKNIEsvg=="
+  "resolved" "https://registry.npmjs.org/cantoui/-/cantoui-1.0.14.tgz"
+  "version" "1.0.14"
   dependencies:
     "react" "^18.2.0"
     "react-burger-menu" "^3.0.8"
