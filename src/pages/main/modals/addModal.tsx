@@ -320,7 +320,7 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
           <Field
             token={value.basePairInfo.token1.symbol}
             icon={value.basePairInfo.token1.icon}
-            remaining = {Number(value.balances.token1) - Number(value1)}
+            remaining = {Number(value.balances.token1)}
             balance={Number(value.balances.token1)}
             limit={Number(getToken1Limit())}
             placeholder="0.00"
@@ -335,7 +335,7 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
           <Field
           icon={value.basePairInfo.token2.icon}
             token={value.basePairInfo.token2.symbol}
-            remaining = {Number(value.balances.token2) - Number(value2)}
+            remaining = {Number(value.balances.token2)}
             balance={Number(value.balances.token2)}
             limit={Number(getToken2Limit())}
             placeholder="0.00"
