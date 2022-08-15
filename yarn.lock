@@ -1631,14 +1631,15 @@
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001373.tgz"
   "version" "1.0.30001373"
 
-"cantoui@^1.0.15":
-  "integrity" "sha512-m1aoqP0Ier68Uw7dWLEQFLwGTmmP/W+nWA/Ix0EOxZWzpoq8dvwDDjQbXZ699yPcYzjb7vticJfI1yzvmfYQtw=="
-  "resolved" "https://registry.npmjs.org/cantoui/-/cantoui-1.0.15.tgz"
-  "version" "1.0.15"
+"cantoui@^1.0.29":
+  "integrity" "sha512-PYhmu8hfktW+VY1X30Uz8vzC4X6bCSSe3IqPBo9pTOQueJeotJuvWVMfQt+zc95RbaojB0fxUWYnhlOC6OsKAw=="
+  "resolved" "https://registry.npmjs.org/cantoui/-/cantoui-1.0.29.tgz"
+  "version" "1.0.29"
   dependencies:
-    "react" "^18.2.0"
     "react-burger-menu" "^3.0.8"
+    "saas" "^1.0.0"
     "styled-components" "^5.3.5"
+    "zustand" "^4.0.0"
 
 "caseless@~0.12.0":
   "integrity" "sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw=="
@@ -4544,6 +4545,11 @@
   "integrity" "sha512-4VlvkRUuCJvr2J6Y0ImW7NvTCriMi7ErOAqWk1y69vAdoNIzCF3yPmgeNzx+RQTLEDFq5sHfscn1MwHxP9hNfA=="
   "resolved" "https://registry.npmjs.org/rustbn.js/-/rustbn.js-0.2.0.tgz"
   "version" "0.2.0"
+
+"saas@^1.0.0":
+  "integrity" "sha512-FgayhFS18BlPfcyMcOqxD7PIyNyUjqyv8R+rsr3X2KRK2icEUL4uvWBF+lZ0IPqJIO2kUO0d20OXY+R+pdriqg=="
+  "resolved" "https://registry.npmjs.org/saas/-/saas-1.0.0.tgz"
+  "version" "1.0.0"
 
 "safe-buffer@^5.0.1", "safe-buffer@^5.1.0", "safe-buffer@^5.1.1", "safe-buffer@^5.1.2", "safe-buffer@^5.2.0", "safe-buffer@^5.2.1", "safe-buffer@~5.2.0", "safe-buffer@5.2.1":
   "integrity" "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ=="

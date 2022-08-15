@@ -70,17 +70,6 @@ const Dex = () => {
 
   const pairs = useDex(networkInfo.account, Number(networkInfo.chainId));
 
- console.log(pairs)
-
-  //Let the user know if they are on the wrong network
-  useEffect(() => {
-    addNetwork();
-      if (!networkInfo.isConnected) {
-        toast.error("please switch networks", {
-          toastId: 1,
-        });
-      }
-  }, [networkInfo.chainId]);
 
   useEffect(() => {
     notifications.forEach((item) => {
@@ -158,11 +147,7 @@ const Dex = () => {
     });
   }, [notifications]);
 
-  return !networkInfo.isConnected ? (
-    <div style={{ color: "red", textAlign: "center" }}>
-      <h1>please switch to canto mainnet</h1>
-    </div>
-  ) : (
+  return (
     <Container style={style}>
 
       <div style={{ marginBottom: "75px" }}>
