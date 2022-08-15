@@ -1,5 +1,6 @@
 import { CantoTestnet, CantoMainnet } from "global/config/networks";
 import { ethers } from "ethers";
+import { NodeAddresses } from "cantoui";
 
 export function addNetwork() {
   //@ts-ignore
@@ -15,7 +16,7 @@ export function addNetwork() {
             symbol: "CANTO",
             decimals: 18,
           },
-          rpcUrls: [CantoMainnet.rpcUrl],
+          rpcUrls: [NodeAddresses.CantoMainnet.ChandraRPC],
           blockExplorerUrls: [CantoMainnet.blockExplorerUrl],
         },
       ],

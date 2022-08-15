@@ -1,5 +1,5 @@
 import { useEthers } from "@usedapp/core";
-import { NavBar } from "cantoui";
+import { NavBar, useAlert } from "cantoui";
 import { addNetwork, getAccountBalance, getChainIdandAccount } from "global/utils/walletConnect/addCantoToWallet";
 import { useEffect } from "react";
 import { useNetworkInfo } from "pages/main/hooks/networkInfo";
@@ -7,6 +7,7 @@ import logo from "./../../assets/logo.svg"
 
 export const CantoNav = () => {
   const netWorkInfo = useNetworkInfo();
+  const alert = useAlert();
   const { activateBrowserWallet, account } = useEthers();
 
   async function setChainInfo() {
@@ -14,6 +15,14 @@ export const CantoNav = () => {
     netWorkInfo.setChainId(chainId);
     netWorkInfo.setAccount(account);
   }
+
+  useEffect(() => {
+    if (!netWorkInfo.isConnected) {
+      alert.show("Failure", <p>this network is not supported on the lp interface, please <a onClick={addNetwork} style={{cursor: "pointer", textDecoration: "underline", color: "red"}}>switch networks</a></p>)
+    } else {
+      alert.close();
+    }
+  }, [netWorkInfo.isConnected])
 
   useEffect(() => {
     setChainInfo();
