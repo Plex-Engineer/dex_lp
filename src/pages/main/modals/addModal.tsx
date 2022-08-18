@@ -348,7 +348,11 @@ const AddModal = ({ value, onClose, chainId, account }: Props) => {
         </div>
       </div>
       <div style={{ color: "white" }}>
-         {"1 " + value.basePairInfo.token1.symbol + " = " + truncateByZeros((1 / value.totalSupply.ratio).toString()) + " " + value.basePairInfo.token2.symbol}
+         {<p style={{textAlign: "right"}}><a>reserve ratio: </a> 1   {value.basePairInfo.token1.symbol} =   {truncateByZeros((1 / value.totalSupply.ratio).toString())} {value.basePairInfo.token2.symbol}</p> }
+         <br/>
+         {value.basePairInfo.stable ? 
+         <p style={{textAlign: "right"}}><a style={{textAlign: "left"}}>price: </a> 1   {value.basePairInfo.token1.symbol} =   {truncateByZeros(value.prices.token2)} {value.basePairInfo.token2.symbol}</p> 
+        : ""}
       </div>
       <div className="fields" style={{
         flexDirection: "column",
