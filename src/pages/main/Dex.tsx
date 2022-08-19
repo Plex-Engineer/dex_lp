@@ -261,9 +261,8 @@ const Dex = () => {
                   position={
                     truncateByZeros(pair.userSupply.totalLP) + " LP Tokens"
                   }
-                  share={(pair.userSupply.percentOwned * 100)
-                    .toFixed(2)
-                    .toString()}
+                  share={truncateByZeros((pair.userSupply.percentOwned * 100).toString()).toString()
+                   }
                 />
               ) : null;
             })}
@@ -306,11 +305,10 @@ const Dex = () => {
                   totalValueLocked={noteSymbol + pair.totalSupply.tvl}
                   apr={"23.2"}
                   position={
-                    Number(pair.userSupply.totalLP).toFixed(4) + " LP Tokens"
+                    truncateByZeros(pair.userSupply.totalLP) + " LP Tokens"
                   }
-                  share={(pair.userSupply.percentOwned * 100)
-                    .toFixed(2)
-                    .toString()}
+                  share={truncateByZeros((pair.userSupply.percentOwned * 100)
+                    .toString()).toString()}
                 />
               );
             })}
