@@ -13,6 +13,7 @@ import style from "./Dex.module.scss"
 import  {addNetwork} from "global/utils/walletConnect/addCantoToWallet";
 import { useNetworkInfo } from "./hooks/networkInfo";
 import { truncateByZeros } from "./utils/utils";
+import { ethers } from "ethers";
 
 const Container = styled.div`
   display: flex;
@@ -256,7 +257,7 @@ const Dex = () => {
                     "/" +
                     pair.basePairInfo.token2.symbol
                   }
-                  totalValueLocked={noteSymbol + pair.totalSupply.tvl}
+                  totalValueLocked={noteSymbol + ethers.utils.commify(pair.totalSupply.tvl)}
                   apr={"23.2"}
                   position={
                     truncateByZeros(pair.userSupply.totalLP) + " LP Tokens"
@@ -302,7 +303,7 @@ const Dex = () => {
                     "/" +
                     pair.basePairInfo.token2.symbol
                   }
-                  totalValueLocked={noteSymbol + pair.totalSupply.tvl}
+                  totalValueLocked={noteSymbol + ethers.utils.commify(pair.totalSupply.tvl)}
                   apr={"23.2"}
                   position={
                     truncateByZeros(pair.userSupply.totalLP) + " LP Tokens"
