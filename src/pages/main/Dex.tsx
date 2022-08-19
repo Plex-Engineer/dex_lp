@@ -225,7 +225,7 @@ const Dex = () => {
               </Table>
               </div>
             ) : null}
-      {pairs?.filter((pair: AllPairInfo) => Number(pair.userSupply.totalLP) > 0)
+      {pairs?.filter((pair: AllPairInfo) => (Number(pair.userSupply.totalLP) > 0 || (Number(pair.userSupply.percentOwned) > 0)))
         .length ?? 0 > 0 ? (
         <div>
           <p className="tableName"
@@ -239,10 +239,10 @@ const Dex = () => {
           </p>
           <Table columns={["Asset",
           "TVL",
-          "Position",
+          "wallet",
           "% Share"]}>
             {pairs?.map((pair: AllPairInfo) => {
-              return Number(pair.userSupply.totalLP) > 0 ? (
+              return (Number(pair.userSupply.totalLP) > 0 || (Number(pair.userSupply.percentOwned) > 0))? (
                 <Row
                   key={pair.basePairInfo.address}
                   iconLeft={pair.basePairInfo.token1.icon}
@@ -261,9 +261,8 @@ const Dex = () => {
                   position={
                     truncateByZeros(pair.userSupply.totalLP) + " LP Tokens"
                   }
-                  share={(pair.userSupply.percentOwned * 100)
-                    .toFixed(2)
-                    .toString()}
+                  share={truncateByZeros((pair.userSupply.percentOwned * 100).toString()).toString()
+                   }
                 />
               ) : null;
             })}
@@ -272,7 +271,7 @@ const Dex = () => {
       ) : null}
 
       {pairs?.filter(
-        (pair: AllPairInfo) => Number(pair.userSupply.totalLP) == 0
+        (pair: AllPairInfo) => (Number(pair.userSupply.totalLP) == 0 && Number(pair.userSupply.percentOwned) == 0)
       ).length ?? 0 > 0 ? (
         <div>
           <p
@@ -286,10 +285,10 @@ const Dex = () => {
           </p>
           <Table columns={["Asset",
           "TVL",
-          "Position",
+          "wallet",
           "% Share"]}>
             {pairs?.map((pair: AllPairInfo) => {
-              return Number(pair.userSupply.totalLP) > 0 ? null : (
+              return !(Number(pair.userSupply.totalLP) == 0 && Number(pair.userSupply.percentOwned) == 0)? null : (
                 <Row
                   key={pair.basePairInfo.address}
                   iconLeft={pair.basePairInfo.token1.icon}
@@ -306,11 +305,10 @@ const Dex = () => {
                   totalValueLocked={noteSymbol + pair.totalSupply.tvl}
                   apr={"23.2"}
                   position={
-                    Number(pair.userSupply.totalLP).toFixed(4) + " LP Tokens"
+                    truncateByZeros(pair.userSupply.totalLP) + " LP Tokens"
                   }
-                  share={(pair.userSupply.percentOwned * 100)
-                    .toFixed(2)
-                    .toString()}
+                  share={truncateByZeros((pair.userSupply.percentOwned * 100)
+                    .toString()).toString()}
                 />
               );
             })}
