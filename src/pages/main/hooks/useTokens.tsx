@@ -1,6 +1,6 @@
 import { useCalls, useEtherBalance } from "@usedapp/core";
-import { ERC20Abi, routerAbi } from "pages/main/config/abi";
-import { Contract, ethers} from "ethers";
+import { cERC20Abi, ERC20Abi, pairAbi, routerAbi } from "pages/main/config/abi";
+import { BigNumber, Contract, ethers} from "ethers";
 import { formatUnits, formatEther } from "ethers/lib/utils";
 import { PAIR, TESTPAIRS, MAINPAIRS } from "pages/main/config/pairs";
 import { TOKENS as ALLTOKENS, ADDRESSES, CantoTestnet, CantoMainnet } from "cantoui";
@@ -51,6 +51,7 @@ const useTokens = (account: string | undefined, chainId: number | undefined) => 
     const ERC20Contract = new Contract(pair.address, ERC20Abi);
     const ERC20ContractA = new Contract(pair.token1.address, ERC20Abi);
     const ERC20ContractB = new Contract(pair.token2.address, ERC20Abi);
+    const cLPToken = new Contract(pair.cLPaddress, cERC20Abi)
 
     return [
       {
@@ -108,6 +109,18 @@ const useTokens = (account: string | undefined, chainId: number | undefined) => 
         method: "getUnderlyingPrice",
         args: [pair.cLPaddress],
       },
+      //11
+      {
+        contract: cLPToken,
+        method: "balanceOf",
+        args: [account]
+      },
+      //12
+      {
+        contract: cLPToken,
+        method: "exchangeRateStored",
+        args: [],
+      },
     ];
   });
 
@@ -159,7 +172,10 @@ const useTokens = (account: string | undefined, chainId: number | undefined) => 
       }
       const token2Balance = formatUnits(tokenData[4][0], PAIRS[idx].token2.decimals);
 
-      const percentOwned = Number(userLP) / Number(totalSupply);
+      //if the user has supplied in the market, we can get this balance from the cLP tokens and exchange rate stored
+      const userLPSupplyBalance = formatUnits(BigNumber.from(tokenData[11][0]).mul(tokenData[12][0]), 18 + PAIRS[idx].decimals)
+
+      const percentOwned = (Number(userLP) + Number(userLPSupplyBalance)) / Number(totalSupply);
       const userTokensA = percentOwned * Number(reserveA);
       const userTokensB = percentOwned * Number(reserveB);
 
