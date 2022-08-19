@@ -239,7 +239,7 @@ const Dex = () => {
           </p>
           <Table columns={["Asset",
           "TVL",
-          "Position",
+          "wallet",
           "% Share"]}>
             {pairs?.map((pair: AllPairInfo) => {
               return (Number(pair.userSupply.totalLP) > 0 || (Number(pair.userSupply.percentOwned) > 0))? (
@@ -285,7 +285,7 @@ const Dex = () => {
           </p>
           <Table columns={["Asset",
           "TVL",
-          "Position",
+          "wallet",
           "% Share"]}>
             {pairs?.map((pair: AllPairInfo) => {
               return !(Number(pair.userSupply.totalLP) == 0 && Number(pair.userSupply.percentOwned) == 0)? null : (
