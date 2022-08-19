@@ -174,8 +174,9 @@ const useTokens = (account: string | undefined, chainId: number | undefined) => 
 
       //if the user has supplied in the market, we can get this balance from the cLP tokens and exchange rate stored
       const userLPSupplyBalance = formatUnits(BigNumber.from(tokenData[11][0]).mul(tokenData[12][0]), 18 + PAIRS[idx].decimals)
-
-      const percentOwned = (Number(userLP) + Number(userLPSupplyBalance)) / Number(totalSupply);
+      const percentOwnedWithCLPConverted = (Number(userLP) + Number(userLPSupplyBalance)) / Number(totalSupply);
+      
+      const percentOwned = Number(userLP)  / Number(totalSupply);
       const userTokensA = percentOwned * Number(reserveA);
       const userTokensB = percentOwned * Number(reserveB);
 
@@ -222,7 +223,7 @@ const useTokens = (account: string | undefined, chainId: number | undefined) => 
           totalLP: userLP,
           token1: userTokensA.toString(),
           token2: userTokensB.toString(),
-          percentOwned: percentOwned,
+          percentOwned: percentOwnedWithCLPConverted,
         },
         prices: {
           token1: tokenAPriceInNote,
