@@ -115,9 +115,10 @@ const Dex = () => {
             break;
         }
 
+        const errormsg = isSuccesful ? "" : "not";
         const msged =
           (Number(msg.amount) > 0 ? Number(msg.amount).toFixed(2) : "") +
-          ` ${msg.name} has been ${msg.type}`;
+          ` ${msg.name} has ${errormsg} been ${msg.type}`;
 
         toast(msged, {
           position: "top-right",
