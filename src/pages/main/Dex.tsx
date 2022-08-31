@@ -10,7 +10,7 @@ import { useNotifications } from "@usedapp/core";
 import useModals, { ModalType } from "./hooks/useModals";
 import { ModalManager } from "./modals/ModalManager";
 import style from "./Dex.module.scss"
-import  {addNetwork} from "global/utils/walletConnect/addCantoToWallet";
+import { addNetwork } from "global/utils/walletConnect/addCantoToWallet";
 import { useNetworkInfo } from "./hooks/networkInfo";
 import { truncateByZeros } from "./utils/utils";
 import { ethers } from "ethers";
@@ -33,6 +33,11 @@ const Container = styled.div`
     justify-content: center;
     text-shadow: 0px 14px 14px rgba(6, 252, 153, 0.2);
   }
+  .table-title {
+  width:  1200px;
+  margin: 0 auto;
+  padding: 0;
+  }
 
   & > button {
     background-color: var(--primary-color);
@@ -54,6 +59,11 @@ const Container = styled.div`
   @media (max-width: 1000px) {
     h1 {
       font-size: 20vw;
+    }
+
+    .table-title {
+      width:  100%;
+      margin: 0 2rem;
     }
   }
 `;
@@ -129,18 +139,16 @@ const Dex = () => {
           pauseOnHover: true,
           draggable: true,
           progressStyle: {
-            color: `${
-              isSuccesful ? "var(--primary-color)" : "var(--error-color"
-            }`,
+            color: `${isSuccesful ? "var(--primary-color)" : "var(--error-color"
+              }`,
           },
           style: {
             border: "1px solid var(--primary-color)",
             borderRadius: "0px",
             paddingBottom: "3px",
             background: "black",
-            color: `${
-              isSuccesful ? "var(--primary-color)" : "var(--error-color"
-            }`,
+            color: `${isSuccesful ? "var(--primary-color)" : "var(--error-color"
+              }`,
             height: "100px",
             fontSize: "20px",
           },
@@ -162,20 +170,20 @@ const Dex = () => {
           }}
         />
       </div>
-      <h4 style={{ textAlign: "center"}}>
+      <h4 style={{ textAlign: "center" }}>
         to swap tokens, visit{" "}
         <a
-          style={{ color: "#a2fca3", textDecoration: "underline"}}
+          style={{ color: "#a2fca3", textDecoration: "underline" }}
           href="https://app.slingshot.finance/trade/"
         >
           Slingshot
         </a>
       </h4>
       {notifs.filter(
-              (filterItem) => filterItem.type == "transactionStarted"
-            ).length > 0 ? (
-              <div>
-          <p 
+        (filterItem) => filterItem.type == "transactionStarted"
+      ).length > 0 ? (
+        <div>
+          <p
             style={{
               width: "1200px",
               margin: "0 auto",
@@ -184,49 +192,49 @@ const Dex = () => {
           >
             ongoing transaction
           </p>
-              <Table columns={["name","transaction","time"]}>
-                {notifs.map((item) => {
-                  if (
-                    //@ts-ignore
-                    item?.transactionName?.includes("type") &&
-                    item.type == "transactionStarted"
-                  ) {
-                    //@ts-ignore
-                    const msg: Details = JSON.parse(item?.transactionName);
+          <Table columns={["name", "transaction", "time"]}>
+            {notifs.map((item) => {
+              if (
+                //@ts-ignore
+                item?.transactionName?.includes("type") &&
+                item.type == "transactionStarted"
+              ) {
+                //@ts-ignore
+                const msg: Details = JSON.parse(item?.transactionName);
 
-                    switch (msg.type) {
-                      case "add":
-                        msg.type = "adding";
-                        break;
-                      case "remove":
-                        msg.type = "removing";
-                        break;
-                      case "Enable":
-                        msg.type = "enabling";
-                        break;
+                switch (msg.type) {
+                  case "add":
+                    msg.type = "adding";
+                    break;
+                  case "remove":
+                    msg.type = "removing";
+                    break;
+                  case "Enable":
+                    msg.type = "enabling";
+                    break;
+                }
+                return (
+                  <TransactionRow
+                    key={item.submittedAt}
+                    icons={msg.icon}
+                    name={msg.name.toLowerCase()}
+                    status={
+                      msg.type +
+                      " " +
+                      (Number(msg.amount) > 0
+                        ? Number(msg.amount).toFixed(2)
+                        : "") +
+                      " " +
+                      msg.name
                     }
-                    return (
-                      <TransactionRow
-                      key={item.submittedAt}
-                        icons={msg.icon}
-                        name={msg.name.toLowerCase()}
-                        status={
-                          msg.type +
-                          " " +
-                          (Number(msg.amount) > 0
-                            ? Number(msg.amount).toFixed(2)
-                            : "") +
-                          " " +
-                          msg.name
-                        }
-                        date={new Date(item.submittedAt)}
-                      />
-                    );
-                  }
-                })}
-              </Table>
-              </div>
-            ) : null}
+                    date={new Date(item.submittedAt)}
+                  />
+                );
+              }
+            })}
+          </Table>
+        </div>
+      ) : null}
       {pairs?.filter((pair: AllPairInfo) => (Number(pair.userSupply.totalLP) > 0 || (Number(pair.userSupply.percentOwned) > 0)))
         .length ?? 0 > 0 ? (
         <div>
@@ -240,18 +248,18 @@ const Dex = () => {
             current position
           </p>
           <Table columns={["Asset",
-          "TVL",
-          "wallet",
-          "% Share"]}>
+            "TVL",
+            "wallet",
+            "% Share"]}>
             {pairs?.map((pair: AllPairInfo) => {
-              return (Number(pair.userSupply.totalLP) > 0 || (Number(pair.userSupply.percentOwned) > 0))? (
+              return (Number(pair.userSupply.totalLP) > 0 || (Number(pair.userSupply.percentOwned) > 0)) ? (
                 <Row
                   key={pair.basePairInfo.address}
                   iconLeft={pair.basePairInfo.token1.icon}
                   iconRight={pair.basePairInfo.token2.icon}
                   onClick={() => {
                     setActivePair(pair)
-                    setModalType( Number(pair.userSupply.totalLP) > 0 ? ModalType.ADD_OR_REMOVE : ModalType.ADD)
+                    setModalType(Number(pair.userSupply.totalLP) > 0 ? ModalType.ADD_OR_REMOVE : ModalType.ADD)
                   }}
                   assetName={
                     pair.basePairInfo.token1.symbol +
@@ -264,7 +272,7 @@ const Dex = () => {
                     truncateByZeros(pair.userSupply.totalLP) + " LP Tokens"
                   }
                   share={truncateByZeros((pair.userSupply.percentOwned * 100).toString()).toString()
-                   }
+                  }
                 />
               ) : null;
             })}
@@ -276,28 +284,23 @@ const Dex = () => {
         (pair: AllPairInfo) => (Number(pair.userSupply.totalLP) == 0 && Number(pair.userSupply.percentOwned) == 0)
       ).length ?? 0 > 0 ? (
         <div>
-          <p
-            style={{
-              width: "1200px",
-              margin: "0 auto",
-              padding: "0",
-            }}
+          <p className="table-title"
           >
             pools
           </p>
           <Table columns={["Asset",
-          "TVL",
-          "wallet",
-          "% Share"]}>
+            "TVL",
+            "wallet",
+            "% Share"]}>
             {pairs?.map((pair: AllPairInfo) => {
-              return !(Number(pair.userSupply.totalLP) == 0 && Number(pair.userSupply.percentOwned) == 0)? null : (
+              return !(Number(pair.userSupply.totalLP) == 0 && Number(pair.userSupply.percentOwned) == 0) ? null : (
                 <Row
                   key={pair.basePairInfo.address}
                   iconLeft={pair.basePairInfo.token1.icon}
                   iconRight={pair.basePairInfo.token2.icon}
                   onClick={() => {
                     setActivePair(pair)
-                    setModalType( Number(pair.userSupply.totalLP) > 0 ? ModalType.ADD_OR_REMOVE : ModalType.ADD)
+                    setModalType(Number(pair.userSupply.totalLP) > 0 ? ModalType.ADD_OR_REMOVE : ModalType.ADD)
                   }}
                   assetName={
                     pair.basePairInfo.token1.symbol +

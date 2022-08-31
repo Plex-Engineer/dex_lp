@@ -13,7 +13,7 @@ function App() {
       <ScanlinesOverlay />
       <ScanLine/>
       <Overlay/>
-      <CantoNav/>
+      {/* <CantoNav/> */}
       <Dex/>
     </div>
   )

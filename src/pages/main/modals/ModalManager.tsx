@@ -54,6 +54,10 @@ const StyledPopup = styled(Popup)`
   &:hover::-webkit-scrollbar-thumb {
     background: #353535;
   }
+
+  @media (max-width: 1000px) {
+    width: 100vw;
+  }
 }
 `;
 

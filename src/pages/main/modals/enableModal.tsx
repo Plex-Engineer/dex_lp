@@ -55,6 +55,10 @@ const Container = styled.div`
     padding: 1rem;
     gap: 0.3rem;
   }
+
+  @media (max-width: 1000px) {
+    width: 100vw;
+  }
 `;
 
 const Button = styled.button`
