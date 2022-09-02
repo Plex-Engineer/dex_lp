@@ -77,6 +77,9 @@ const Container = styled.div`
       color: white;
     }
   }
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
 `;
 
 const Button = styled.button`
@@ -261,14 +264,14 @@ const RemoveModal = ({ value, onClose, chainId, account }: Props) => {
         )}
       >
         <LoadingModal
-          icons={
-            {
-              icon1 : value.basePairInfo.token1.icon,
-              icon2 : value.basePairInfo.token2.icon
-            }
-          }
+          icons={{
+            icon1: value.basePairInfo.token1.icon,
+            icon2: value.basePairInfo.token2.icon,
+          }}
           name={
-            value.basePairInfo.token1.symbol + " / " + value.basePairInfo.token2.symbol
+            value.basePairInfo.token1.symbol +
+            " / " +
+            value.basePairInfo.token2.symbol
           }
           amount={"0"}
           type="remove"
@@ -343,12 +346,26 @@ const RemoveModal = ({ value, onClose, chainId, account }: Props) => {
           you'll receive
         </p>
         <RowCell
-          type={truncateByZeros(value1.toString()) + " " + value.basePairInfo.token1.symbol}
-          value={noteSymbol + truncateByZeros((value1 * Number(value.prices.token1)).toString())}
+          type={
+            truncateByZeros(value1.toString()) +
+            " " +
+            value.basePairInfo.token1.symbol
+          }
+          value={
+            noteSymbol +
+            truncateByZeros((value1 * Number(value.prices.token1)).toString())
+          }
         />
         <RowCell
-          type={truncateByZeros(value2.toString()) + " " + value.basePairInfo.token2.symbol}
-          value={noteSymbol + truncateByZeros((value2 * Number(value.prices.token2)).toString())}
+          type={
+            truncateByZeros(value2.toString()) +
+            " " +
+            value.basePairInfo.token2.symbol
+          }
+          value={
+            noteSymbol +
+            truncateByZeros((value2 * Number(value.prices.token2)).toString())
+          }
         />
       </div>
       <ConfirmButton

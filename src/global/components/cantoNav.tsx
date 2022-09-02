@@ -1,9 +1,13 @@
 import { useEthers } from "@usedapp/core";
-import { NavBar, useAlert } from "cantoui";
-import { addNetwork, getAccountBalance, getChainIdandAccount } from "global/utils/walletConnect/addCantoToWallet";
+import { NavBar, useAlert } from "../../../../blockchain/canto/src";
+import {
+  addNetwork,
+  getAccountBalance,
+  getChainIdandAccount,
+} from "global/utils/walletConnect/addCantoToWallet";
 import { useEffect } from "react";
 import { useNetworkInfo } from "pages/main/hooks/networkInfo";
-import logo from "./../../assets/logo.svg"
+import logo from "./../../assets/logo.svg";
 
 export const CantoNav = () => {
   const netWorkInfo = useNetworkInfo();
@@ -18,11 +22,26 @@ export const CantoNav = () => {
 
   useEffect(() => {
     if (!netWorkInfo.isConnected) {
-      alert.show("Failure", <p>this network is not supported on the lp interface, please <a onClick={addNetwork} style={{cursor: "pointer", textDecoration: "underline", color: "red"}}>switch networks</a></p>)
+      alert.show(
+        "Failure",
+        <p>
+          this network is not supported on the lp interface, please{" "}
+          <a
+            onClick={addNetwork}
+            style={{
+              cursor: "pointer",
+              textDecoration: "underline",
+              color: "red",
+            }}
+          >
+            switch networks
+          </a>
+        </p>
+      );
     } else {
       alert.close();
     }
-  }, [netWorkInfo.isConnected])
+  }, [netWorkInfo.isConnected]);
 
   useEffect(() => {
     setChainInfo();
@@ -44,12 +63,12 @@ export const CantoNav = () => {
 
   async function getBalance() {
     if (netWorkInfo.account != undefined) {
-      netWorkInfo.setBalance(await getAccountBalance(netWorkInfo.account))
+      netWorkInfo.setBalance(await getAccountBalance(netWorkInfo.account));
     }
   }
   useEffect(() => {
     getBalance();
-  },[netWorkInfo.account])
+  }, [netWorkInfo.account]);
 
   return (
     <NavBar

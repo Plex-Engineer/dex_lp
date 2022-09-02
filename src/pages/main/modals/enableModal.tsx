@@ -55,6 +55,10 @@ const Container = styled.div`
     padding: 1rem;
     gap: 0.3rem;
   }
+
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
 `;
 
 const Button = styled.button`
@@ -94,9 +98,7 @@ interface AddAllowanceProps {
 }
 
 const AddAllowanceButton = (props: AddAllowanceProps) => {
-  const [setModalType] = useModals((state) => [
-    state.setModalType,
-  ]);
+  const [setModalType] = useModals((state) => [state.setModalType]);
 
   const routerAddress = getRouterAddress(props.chainId);
   const { state: addAllowanceA, send: addAllowanceASend } = useSetAllowance({
@@ -196,12 +198,15 @@ const RemoveAllowanceButton = (props: AddAllowanceProps) => {
 
   const routerAddress = getRouterAddress(props.chainId);
   const { state: addLPAllowance, send: addLPAllowanceSend } = useSetAllowance({
-    type : "Enable",
-    address : props.pair.basePairInfo.address,
-    amount : "-1",
+    type: "Enable",
+    address: props.pair.basePairInfo.address,
+    amount: "-1",
     // TODO? : needs access of iconpair
-    icon : props.pair.basePairInfo.token1.icon,
-    name : props.pair.basePairInfo.token1.symbol + "/" + props.pair.basePairInfo.token2.symbol
+    icon: props.pair.basePairInfo.token1.icon,
+    name:
+      props.pair.basePairInfo.token1.symbol +
+      "/" +
+      props.pair.basePairInfo.token2.symbol,
   });
 
   useEffect(() => {
@@ -284,14 +289,14 @@ const EnableModal = ({ value, onClose, chainId, account }: Props) => {
         )}
       >
         <LoadingModal
-        icons={
-            {
-              icon1 : value.basePairInfo.token1.icon,
-              icon2 : value.basePairInfo.token2.icon
-            }
-          }
+          icons={{
+            icon1: value.basePairInfo.token1.icon,
+            icon2: value.basePairInfo.token2.icon,
+          }}
           name={
-            value.basePairInfo.token1.symbol + " / " + value.basePairInfo.token2.symbol
+            value.basePairInfo.token1.symbol +
+            " / " +
+            value.basePairInfo.token2.symbol
           }
           amount={"0"}
           type="enable"
@@ -304,14 +309,14 @@ const EnableModal = ({ value, onClose, chainId, account }: Props) => {
         )}
       >
         <LoadingModal
-        icons={
-            {
-              icon1 : value.basePairInfo.token1.icon,
-              icon2 : value.basePairInfo.token2.icon
-            }
-          }
+          icons={{
+            icon1: value.basePairInfo.token1.icon,
+            icon2: value.basePairInfo.token2.icon,
+          }}
           name={
-            value.basePairInfo.token1.symbol + " / " + value.basePairInfo.token2.symbol
+            value.basePairInfo.token1.symbol +
+            " / " +
+            value.basePairInfo.token2.symbol
           }
           amount={"0"}
           type="enable"
