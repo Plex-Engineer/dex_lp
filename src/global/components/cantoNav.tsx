@@ -72,7 +72,12 @@ export const CantoNav = () => {
 
   return (
     <NavBar
-      title="lp interface"
+      pageList={[
+        {
+          name: "Lp Interface",
+          link: "/",
+        },
+      ]}
       onClick={() => {
         activateBrowserWallet();
         addNetwork();
