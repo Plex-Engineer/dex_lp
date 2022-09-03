@@ -1,5 +1,5 @@
 import { useEthers } from "@usedapp/core";
-import { NavBar, useAlert } from "../../../../blockchain/canto/src";
+import { NavBar, useAlert } from "cantoui";
 import {
   addNetwork,
   getAccountBalance,
