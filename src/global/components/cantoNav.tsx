@@ -8,7 +8,7 @@ import {
 import { useEffect } from "react";
 import { useNetworkInfo } from "pages/main/hooks/networkInfo";
 import logo from "./../../assets/logo.svg";
-import WalletConnectProvider from "@walletconnect/web3-provider/";
+// import WalletConnectProvider from "@walletconnect/web3-provider/";
 
 export const CantoNav = () => {
   const netWorkInfo = useNetworkInfo();
@@ -71,17 +71,17 @@ export const CantoNav = () => {
     getBalance();
   }, [netWorkInfo.account]);
 
-  async function onConnect() {
-    try {
-      const provider = new WalletConnectProvider({
-        infuraId: "099be1bf60eab5b2a67865aa081cf4ad",
-      });
-      await provider.enable();
-      await activate(provider);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  //   async function onConnect() {
+  //     try {
+  //       const provider = new WalletConnectProvider({
+  //         infuraId: "099be1bf60eab5b2a67865aa081cf4ad",
+  //       });
+  //       await provider.enable();
+  //       await activate(provider);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
   return (
     <NavBar
       pageList={[
@@ -92,7 +92,7 @@ export const CantoNav = () => {
       ]}
       onClick={() => {
         // activateBrowserWallet();
-        onConnect();
+        // onConnect();
         addNetwork();
       }}
       chainId={Number(netWorkInfo.chainId)}
