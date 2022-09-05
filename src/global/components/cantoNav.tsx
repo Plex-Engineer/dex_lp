@@ -1,5 +1,5 @@
 import { useEthers } from "@usedapp/core";
-import { NavBar, useAlert } from "../../../../blockchain/canto/src";
+import { NavBar, useAlert } from "cantoui";
 import {
   addNetwork,
   getAccountBalance,
@@ -8,11 +8,12 @@ import {
 import { useEffect } from "react";
 import { useNetworkInfo } from "pages/main/hooks/networkInfo";
 import logo from "./../../assets/logo.svg";
+// import WalletConnectProvider from "@walletconnect/web3-provider/";
 
 export const CantoNav = () => {
   const netWorkInfo = useNetworkInfo();
   const alert = useAlert();
-  const { activateBrowserWallet, account } = useEthers();
+  const { activateBrowserWallet, account, activate } = useEthers();
 
   async function setChainInfo() {
     const [chainId, account] = await getChainIdandAccount();
@@ -70,11 +71,28 @@ export const CantoNav = () => {
     getBalance();
   }, [netWorkInfo.account]);
 
+  //   async function onConnect() {
+  //     try {
+  //       const provider = new WalletConnectProvider({
+  //         infuraId: "099be1bf60eab5b2a67865aa081cf4ad",
+  //       });
+  //       await provider.enable();
+  //       await activate(provider);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
   return (
     <NavBar
-      title="lp interface"
+      pageList={[
+        {
+          name: "Lp Interface",
+          link: "/",
+        },
+      ]}
       onClick={() => {
-        activateBrowserWallet();
+        // activateBrowserWallet();
+        // onConnect();
         addNetwork();
       }}
       chainId={Number(netWorkInfo.chainId)}

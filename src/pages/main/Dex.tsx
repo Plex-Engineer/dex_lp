@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Table from "./components/table";
-import Row, { TransactionRow } from "./components/row";
+import Row, { LoadingRow, TransactionRow } from "./components/row";
 import { useEffect, useState } from "react";
 import useDex from "pages/main/hooks/useTokens";
 import { AllPairInfo } from "pages/main/hooks/useTokens";
@@ -237,10 +237,12 @@ const Dex = () => {
         <div>
           <p className="tableName">current position</p>
           <Table columns={["Asset", "TVL", "wallet", "% Share"]}>
-            {pairs?.map((pair: AllPairInfo) => {
+            {pairs?.map((pair: AllPairInfo, idx) => {
+              console.log(0.2 * idx);
               return Number(pair.userSupply.totalLP) > 0 ||
                 Number(pair.userSupply.percentOwned) > 0 ? (
                 <Row
+                  delay={0.2 * idx}
                   key={pair.basePairInfo.address}
                   iconLeft={pair.basePairInfo.token1.icon}
                   iconRight={pair.basePairInfo.token2.icon}
@@ -282,12 +284,13 @@ const Dex = () => {
         <div>
           <p className="tableName">pools</p>
           <Table columns={["Asset", "TVL", "wallet", "% Share"]}>
-            {pairs?.map((pair: AllPairInfo) => {
+            {pairs?.map((pair: AllPairInfo, idx) => {
               return !(
                 Number(pair.userSupply.totalLP) == 0 &&
                 Number(pair.userSupply.percentOwned) == 0
               ) ? null : (
                 <Row
+                  delay={0.1 * idx}
                   key={pair.basePairInfo.address}
                   iconLeft={pair.basePairInfo.token1.icon}
                   iconRight={pair.basePairInfo.token2.icon}
@@ -319,7 +322,14 @@ const Dex = () => {
             })}
           </Table>
         </div>
-      ) : null}
+      ) : null
+      // <Table columns={["Asset", "TVL", "wallet", "% Share"]}>
+      //   <LoadingRow colSpan={4} />
+      //   <LoadingRow colSpan={4} />
+      //   <LoadingRow colSpan={4} />
+      //   <LoadingRow colSpan={4} />
+      // </Table>
+      }
     </Container>
   );
 };
