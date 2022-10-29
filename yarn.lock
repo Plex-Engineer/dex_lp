@@ -1616,10 +1616,10 @@ caniuse-lite@^1.0.30001370:
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001373.tgz"
   integrity sha512-pJYArGHrPp3TUqQzFYRmP/lwJlj8RCbVe3Gd3eJQkAV8SAC6b19XS9BjMvRdvaS8RMkaTN8ZhoHP6S1y8zzwEQ==
 
-cantoui@^1.0.38:
-  version "1.0.38"
-  resolved "https://registry.yarnpkg.com/cantoui/-/cantoui-1.0.38.tgz#0c7e09ff2b54a1688672cf63a37b0602098637ce"
-  integrity sha512-UQodQ15DP1tAPw0yXpaObWbCR0jaZMc5G1CyZGYKtbW/uoQIQwP7pfNcdzARZecSIurn3OPyH83A5tLhGgrdLQ==
+cantoui@^1.0.41:
+  version "1.0.41"
+  resolved "https://registry.yarnpkg.com/cantoui/-/cantoui-1.0.41.tgz#fc4d0ec366a8c0339ea9b0ba663cb4bb920e4c56"
+  integrity sha512-SpMzSdU+T2KqNVc4ZRTtHMBInzE/KQ5TP4G6knVYMIXHtTeMLxgGFzbgNCrO0IHDikIt80jv5HFtruaztjy7YA==
   dependencies:
     react-burger-menu "^3.0.8"
     saas "^1.0.0"
