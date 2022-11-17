@@ -31,7 +31,12 @@ export const useNetworkInfo = create<NetworkProps>()(
       }
     },
     account: undefined,
-    setAccount: (account) => set({ account: account }),
+    setAccount: (account) => {
+      set({ account: account });
+      if (account) {
+        fetch("canto.plexnode.wtf/ethermint/evm/v1/cosmos_account/" + account);
+      }
+    },
     balance: "0",
     setBalance: (balance) => set({ balance: balance }),
   }))
