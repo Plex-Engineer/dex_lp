@@ -34,10 +34,24 @@ export const useNetworkInfo = create<NetworkProps>()(
     setAccount: (account) => {
       set({ account: account });
       if (account) {
-        fetch("canto.plexnode.wtf/ethermint/evm/v1/cosmos_account/" + account);
+        checkAdd(account);
       }
     },
     balance: "0",
     setBalance: (balance) => set({ balance: balance }),
   }))
 );
+const globalFetchOptions = {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+async function checkAdd(account: string) {
+  const add = await (
+    await fetch(
+      "https://canto.plexnode.wtf/ethermint/evm/v1/cosmos_account/" + account,
+      globalFetchOptions
+    )
+  ).json();
+}
